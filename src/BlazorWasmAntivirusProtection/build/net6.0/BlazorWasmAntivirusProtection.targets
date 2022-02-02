@@ -1,7 +1,7 @@
 <Project>
     <UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.ChangeDllHeaders"
                AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
-    <UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.Tasks.RenameDlls"
+    <UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.RenameDlls"
             AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 
     <PropertyGroup>

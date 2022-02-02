@@ -61,6 +61,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 Log.LogMessage(MessageImportance.High, $"Deleting \"{bootJsonBrPath}\"");
                 File.Delete(bootJsonBrPath);
             }
+            Log.LogMessage(MessageImportance.High, $"Renaming .dll files to .{BinaryExtensionName} finished");
 
             return true;
         }

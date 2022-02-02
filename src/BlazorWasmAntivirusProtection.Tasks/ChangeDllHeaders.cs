@@ -25,6 +25,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 FlipBz(asset.ItemSpec);
                 Log.LogMessage(MessageImportance.High, $"Changed header of {asset.ItemSpec}");
             }
+            Log.LogMessage(MessageImportance.High, $"Changing dll headers from MZ to BZ finished");
 
             return true;
         }
