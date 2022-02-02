@@ -23,7 +23,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 if (Path.GetExtension(name) != ".dll") continue;
 
                 FlipBz(asset.ItemSpec);
-                Log.LogMessage(MessageImportance.High, $"Changed headers of {asset.ItemSpec}");
+                Log.LogMessage(MessageImportance.High, $"Changed header of {asset.ItemSpec}");
             }
 
             return true;

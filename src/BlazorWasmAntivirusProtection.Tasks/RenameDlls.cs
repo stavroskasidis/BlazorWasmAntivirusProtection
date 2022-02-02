@@ -28,6 +28,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 {
                     var newName = file.Replace(".dll", $".{BinaryExtensionName}");
                     Log.LogMessage(MessageImportance.High, $"Renaming \"{file}\" to \"{newName}\"");
+                    if (File.Exists(newName)) File.Delete(newName);
                     File.Move(file, newName);
                 }
             }
