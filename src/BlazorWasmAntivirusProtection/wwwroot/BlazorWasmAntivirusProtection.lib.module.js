@@ -1,6 +1,6 @@
 export async function beforeStart(wasmOptions, extensions) {
     try {
-        console.log("Reverting dll headers");
+        console.log("Restoring dll headers");
         //This is to support custom Blazor.start with a custom loadBootResource 
         var existingLoadBootResouce = wasmOptions.loadBootResource;
 
@@ -19,7 +19,7 @@ export async function beforeStart(wasmOptions, extensions) {
             }
                 
 
-            console.log("flipping dll header: " + name);
+            console.log("Restoring dll header: " + name);
             var fetchPromise = null;
             if (existingLoaderResponse) {
                 if (typeof existingLoaderResponse == "string") {
