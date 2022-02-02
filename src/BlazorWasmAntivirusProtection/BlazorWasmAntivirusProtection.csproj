@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>true</IsPackable>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+		<PackageTags>blazor blazorwasm wasm antivirus firewall</PackageTags>
+		<VersionSuffix>$(VersionSuffix)</VersionSuffix>
+		<Version>1.0.0</Version>
+		<Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="build\**" Pack="true" PackagePath="%(Identity)" />
+        <Content Include="_._" Pack="true" PackagePath="lib\net6.0\_._" />
+    </ItemGroup>
+
+    <Target Name="GetTasksOutputDlls" BeforeTargets="CoreCompile">
+        <MSBuild Projects="..\BlazorWasmAntivirusProtection.Tasks\BlazorWasmAntivirusProtection.Tasks.csproj" Targets="Publish;PublishItemsOutputGroup" Properties="Configuration=Release">
+            <Output TaskParameter="TargetOutputs" ItemName="_TasksProjectOutputs" />
+        </MSBuild>
+        <ItemGroup>
+            <Content Include="@(_TasksProjectOutputs)" Condition="'%(_TasksProjectOutputs.Extension)' == '.dll'" Pack="true" PackagePath="tasks\%(_TasksProjectOutputs.TargetPath)" KeepMetadata="Pack;PackagePath" />
+        </ItemGroup>
+    </Target>
+
+
+</Project>

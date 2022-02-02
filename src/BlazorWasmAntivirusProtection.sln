@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmAntivirusProtection", "BlazorWasmAntivirusProtection\BlazorWasmAntivirusProtection.csproj", "{9466369B-820C-4FF6-A325-D8765407715F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmAntivirusProtection.Tasks", "BlazorWasmAntivirusProtection.Tasks\BlazorWasmAntivirusProtection.Tasks.csproj", "{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9466369B-820C-4FF6-A325-D8765407715F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9466369B-820C-4FF6-A325-D8765407715F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9466369B-820C-4FF6-A325-D8765407715F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9466369B-820C-4FF6-A325-D8765407715F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E715717-C14A-4A09-BE07-93EF8245C66C}
+	EndGlobalSection
+EndGlobal
