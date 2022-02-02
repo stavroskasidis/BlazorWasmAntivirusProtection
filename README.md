@@ -37,10 +37,12 @@ To prevent this you should perform a clean on your solution before every publish
 > dotnet publish .\Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
 
-
 ## Samples / Demo
 You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/).
 
+
+## Special Thanks
+This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd]([https://github](https://github.com/tedd))
 
 ## Release Notes
 
