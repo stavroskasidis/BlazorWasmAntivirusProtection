@@ -27,10 +27,11 @@ PM> Install-Package BlazorWasmAntivirusProtection
 *Nuget package page can be found [here](https://www.nuget.org/packages/BlazorDialog).*
 
 ## Known issues
-If you try to publish a project after you published already you have to clean your solution or the publish will fail with the following exception: 
+If you try to publish a project after you have already published you have to clean your solution or the publish will fail with the following exception: 
 
 `error MSB4018: The "PInvokeTableGenerator" task failed unexpectedly.`
 
+This happens because the il linker cannot load the existing modified dlls in the obj folder.
 To prevent this you should perform a clean on your solution before every publish. For example:
 ```
 > dotnet clean BlazorHostedSampleApp.sln -c Release
@@ -42,7 +43,7 @@ You can find a sample app using this package [here](https://blazor-antivirus-blo
 
 
 ## Special Thanks
-This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd]([https://github](https://github.com/tedd))
+This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
 

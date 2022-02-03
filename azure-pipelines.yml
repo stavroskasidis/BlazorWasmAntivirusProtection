@@ -1,0 +1,40 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+- develop
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  ${{ if not(eq(variables['Build.SourceBranchName'], 'develop')) }}:
+      VersionSuffix: ''
+  ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+      VersionSuffix: '-VersionSuffix beta'
+
+workspace:
+  clean: all
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      useGlobalJson: true
+
+  - task: PowerShell@2
+    inputs:
+      filePath: 'scripts/build.ps1'
+      arguments: '$(VersionSuffix)'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'artifacts'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
