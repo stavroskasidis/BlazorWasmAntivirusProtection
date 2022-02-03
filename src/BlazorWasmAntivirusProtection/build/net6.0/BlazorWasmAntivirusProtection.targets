@@ -1,20 +1,19 @@
 <Project>
-    <UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.ChangeDllHeaders"
+	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.ChangeDllHeaders"
                AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
-    <UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.RenameDlls"
+	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.RenameDlls"
             AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 
-    <PropertyGroup>
-        <ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ChangeDllHeaders</ComputeBlazorExtensionsDependsOn>
-    </PropertyGroup>
+	<PropertyGroup>
+		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ChangeDllHeaders</ComputeBlazorExtensionsDependsOn>
+	</PropertyGroup>
 
-    <Target Name="_ChangeDllHeaders">
-		<ChangeDllHeaders PublishBlazorBootStaticWebAsset="@(PublishBlazorBootStaticWebAsset)">
-        </ChangeDllHeaders>
-    </Target>
+	<Target Name="_ChangeDllHeaders">
+		<ChangeDllHeaders PublishBlazorBootStaticWebAsset="@(PublishBlazorBootStaticWebAsset)" DisableChangingDllHeaders="$(DisableChangingDllHeaders)"></ChangeDllHeaders>
+	</Target>
 
-    <Target Name="_ChangeDLLFileExtensions" AfterTargets="Publish">
-        <RenameDlls PublishDir="$(PublishDir)"></RenameDlls>
-    </Target>
+	<Target Name="_ChangeDLLFileExtensions" AfterTargets="Publish">
+		<RenameDlls PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)"></RenameDlls>
+	</Target>
 
 </Project>

@@ -1,6 +1,5 @@
 export async function beforeStart(wasmOptions, extensions) {
     try {
-        console.log("Restoring dll headers");
         //This is to support custom Blazor.start with a custom loadBootResource 
         var existingLoadBootResouce = wasmOptions.loadBootResource;
 
@@ -19,7 +18,6 @@ export async function beforeStart(wasmOptions, extensions) {
             }
                 
 
-            console.log("Restoring dll header: " + name);
             var fetchPromise = null;
             if (existingLoaderResponse) {
                 if (typeof existingLoaderResponse == "string") {
@@ -45,7 +43,10 @@ export async function beforeStart(wasmOptions, extensions) {
                 });
             }).then(responseResult => {
                 var data = new Uint8Array(responseResult.buffer);
-                data[0] = 77; //This restores header from BZ to MZ
+                if (data[0] != 77) {
+                    console.log("Restoring binary header: " + name);
+                    data[0] = 77; //This restores header from BZ to MZ
+                }
                 var resp = new Response(data, { "status": 200, headers: responseResult.headers });
                 return resp;
             });

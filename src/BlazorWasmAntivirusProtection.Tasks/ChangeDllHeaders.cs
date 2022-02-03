@@ -11,26 +11,34 @@ namespace BlazorWasmAntivirusProtection.Tasks
     {
         [Required]
         public ITaskItem[] PublishBlazorBootStaticWebAsset { get; set; }
+        public bool DisableChangingDllHeaders { get; set; }
 
         public override bool Execute()
         {
             if (PublishBlazorBootStaticWebAsset.Length == 0) return true;
 
-            Log.LogMessage(MessageImportance.High, "Changing dll headers from MZ to BZ");
+            if (DisableChangingDllHeaders)
+            {
+                Log.LogMessage(MessageImportance.High, $"Skipping changing .dll headers");
+                return true;
+            }
+
+
+            Log.LogMessage(MessageImportance.High, "Changing .dll headers from MZ to BZ");
             foreach (var asset in PublishBlazorBootStaticWebAsset)
             {
                 var name = Path.GetFileName(asset.GetMetadata("RelativePath"));
                 if (Path.GetExtension(name) != ".dll") continue;
 
-                FlipBz(asset.ItemSpec);
+                ChangeDllHeaderToBz(asset.ItemSpec);
                 Log.LogMessage(MessageImportance.High, $"Changed header of {asset.ItemSpec}");
             }
-            Log.LogMessage(MessageImportance.High, $"Changing dll headers from MZ to BZ finished");
+            Log.LogMessage(MessageImportance.High, $"Changing .dll headers from MZ to BZ finished");
 
             return true;
         }
 
-        void FlipBz(string fn)
+        void ChangeDllHeaderToBz(string fn)
         {
             using var fs = File.Open(fn, FileMode.Open, FileAccess.ReadWrite);
             using var bw = new BinaryWriter(fs);
