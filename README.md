@@ -14,7 +14,7 @@ This package injects some custom MSBuild tasks that do the following:
 3. Adds a `beforeStart` js blazor initialization module, using a custom `loadBootResource` function to restore the MZ header of the dll after downloaded but before loaded by dotnet.wasm
 
 ## How to use
-1. Add the nuget package in your Client (wasm) AND your Server (if blazor wasm hosted) projects
+1. Add the nuget package in your **Client** (wasm) AND your **Server** (if blazor wasm hosted) projects
 ```
 > dotnet add package BlazorWasmAntivirusProtection
 
