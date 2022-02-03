@@ -25,7 +25,6 @@ steps:
   - task: PowerShell@2
     inputs:
       filePath: 'scripts/build-sample-apps.ps1'
-      arguments: '$(VersionSuffix)'
     
   - task: PublishBuildArtifacts@1
     inputs:
