@@ -38,6 +38,26 @@ To prevent this you should perform a clean on your solution before every publish
 > dotnet publish .\Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
 
+## Options
+The following options allow you to disable or customize tasks executed by this package.
+### **Custom dll rename extension**
+If you want to use a different extension for renaming dlls, for example ".blazor", add the following property in the published project's .csproj file (**Server** project if blazor hosted).
+```xml
+<RenameDllsTo>blazor</RenameDllsTo>
+```
+
+### **Disable dll rename**
+You can disable dll renaming by adding the following property in the published project's .csproj file (**Server** project if blazor hosted).
+```xml
+<DisableRenamingDlls>true</DisableRenamingDlls>
+```
+
+### **Disable dll header changing**
+You can disable dll header changing by adding the following property in your **Client** project's .csproj file.
+```xml
+<DisableChangingDllHeaders>true</DisableChangingDllHeaders>
+```
+
 ## Samples / Demo
 You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/).
 
@@ -47,7 +67,12 @@ This work was inspired by the post in https://github.com/dotnet/aspnetcore/issue
 
 ## Release Notes
 
-<details open="open"><summary>0.1</summary>
+<details open="open"><summary>1.0</summary>
+    
+>- Added customization options.
+</details>
+
+<details><summary>0.1</summary>
     
 >- Initial release.
 </details>

@@ -28,6 +28,10 @@ function Confirm-Process {
     }
 }
 
+Write-Message "Cleaning ..."
+dotnet clean ../sampleapps/BlazorHostedSampleApp/BlazorHostedSampleApp.sln -c Release
+Confirm-PreviousCommand
+
 Write-Message "Building ..."
 dotnet publish ../sampleapps/BlazorHostedSampleApp/Server/BlazorHostedSampleApp.Server.csproj -c Release -o ../artifacts/sample-apps/BlazorHostedSampleApp
 Confirm-PreviousCommand
