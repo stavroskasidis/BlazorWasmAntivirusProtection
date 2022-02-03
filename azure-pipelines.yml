@@ -18,9 +18,9 @@ pool:
 
 variables:
   ${{ if not(eq(variables['Build.SourceBranchName'], 'develop')) }}:
-      VersionSuffix: ''
+      VersionSuffixSwitch: ''
   ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
-      VersionSuffix: '-VersionSuffix beta'
+      VersionSuffixSwitch: '-VersionSuffix beta'
 
 workspace:
   clean: all
@@ -34,7 +34,7 @@ steps:
   - task: PowerShell@2
     inputs:
       filePath: 'scripts/build.ps1'
-      arguments: '$(VersionSuffix)'
+      arguments: '$(VersionSuffixSwitch)'
     
   - task: PublishBuildArtifacts@1
     inputs:
