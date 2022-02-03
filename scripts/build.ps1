@@ -44,7 +44,7 @@ dotnet build ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.
 Confirm-PreviousCommand
 
 Write-Message "Creating nuget package ..."
-dotnet pack ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Release /p:VersionSuffix="$VersionSuffix" -o ../artifacts
+dotnet pack ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Release /p:VersionSuffix="$VersionSuffix" -o ../artifacts/nuget
 Confirm-PreviousCommand
 
 Write-Message "Build completed successfully"

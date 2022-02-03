@@ -11,9 +11,6 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
   ${{ if not(eq(variables['Build.SourceBranchName'], 'develop')) }}:
       VersionSuffix: ''
   ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
@@ -35,6 +32,6 @@ steps:
     
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: 'artifacts'
+      PathtoPublish: 'artifacts/nuget'
       ArtifactName: 'drop'
       publishLocation: 'Container'
