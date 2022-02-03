@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches: 
+   include:
+     - master
+  paths:
+    include:
+    - sampleapps
+
+pool:
+  vmImage: ubuntu-latest
+
+workspace:
+  clean: all
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      useGlobalJson: true
+  - task: PowerShell@2
+    inputs:
+      filePath: 'scripts/build-sample-apps.ps1'
+      arguments: '$(VersionSuffix)'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'artifacts/sample-apps'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
