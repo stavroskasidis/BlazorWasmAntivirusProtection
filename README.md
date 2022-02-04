@@ -5,36 +5,40 @@
 This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware, until Microsoft gives us an official solution. 
 This is a work in progress and success is not guaranteed. Use at your own risk.
 
+
+## Confirmed success against:
+1. BitDefender Total Security (v26.0.10.45)
+
+> 🔔 *If you have used this package and has helped you bypass any false positives from other security software, please consider creating an issue with your experience to contribute to this list.*
+
 ## What does this package do ?
 This package injects some custom MSBuild tasks that do the following:
 1. Changes the MZ header of all client assemblies to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
-2. Renames all client assemblies extension from .dll to .bin
-3. Adds a `beforeStart` js blazor initialization module, using a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded but before loaded by dotnet.wasm
+2. Renames the extension of all client assemblies from .dll to .bin
+3. Adds module that contains a `beforeStart` js blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded but before loaded by dotnet.wasm
 
 ## How to use
 1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using blazor wasm hosted) projects
 ```
-> dotnet add package BlazorWasmAntivirusProtection
-
-OR
-
-PM> Install-Package BlazorWasmAntivirusProtection
+dotnet add package BlazorWasmAntivirusProtection
 ``` 
 
 2. Publish your app in Release mode and test it!
 ```
-> dotnet clean BlazorHostedSampleApp.sln -c Release
-> dotnet publish .\Server\BlazorHostedSampleApp.Server.csproj -c Release
+#Perform a clean first, see "Known Issue" below
+dotnet clean BlazorHostedSampleApp.sln -c Release
+
+dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/BlazorDialog).*
 
-## ⚠️ Known issues ⚠️ 
+## ⚠️ Known issue ⚠️ 
 If you try to publish a project after you have already published you have to clean your solution or the publish will fail with the following exception: 
 
 `error MSB4018: The "PInvokeTableGenerator" task failed unexpectedly.`
 
 This happens because the il linker cannot load the existing modified dlls in the obj folder.
-To prevent this you should perform a clean on your solution before every publish, as displayed above.
+To prevent this error you should perform a clean on your solution before every publish, as displayed above.
 
 ## Configuration
 The following options allow you to customize the tasks executed by this package.
