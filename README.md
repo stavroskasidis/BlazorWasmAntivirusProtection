@@ -3,51 +3,49 @@
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Nuget](https://img.shields.io/nuget/dt/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
 This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware, until Microsoft gives us an official solution. 
-This is a work in progress and success is not guaranteed. 
-
-⚠️USE AT YOUR OWN RISK⚠️
+This is a work in progress and success is not guaranteed. Use at your own risk.
 
 ## What does this package do ?
 This package injects some custom MSBuild tasks that do the following:
-1. Changes the MZ header of all client .dlls to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
-2. Renames all .dll files to .bin
-3. Adds a `beforeStart` js blazor initialization module, using a custom `loadBootResource` function to restore the MZ header of the dll after downloaded but before loaded by dotnet.wasm
+1. Changes the MZ header of all client assemblies to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
+2. Renames all client assemblies extension from .dll to .bin
+3. Adds a `beforeStart` js blazor initialization module, using a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded but before loaded by dotnet.wasm
 
 ## How to use
-1. Add the nuget package in your **Client** (wasm) AND your **Server** (if blazor wasm hosted) projects
+1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using blazor wasm hosted) projects
 ```
 > dotnet add package BlazorWasmAntivirusProtection
 
 OR
 
 PM> Install-Package BlazorWasmAntivirusProtection
-```
-2. Publish your app in Release and test!
+``` 
 
+2. Publish your app in Release mode and test it!
+```
+> dotnet clean BlazorHostedSampleApp.sln -c Release
+> dotnet publish .\Server\BlazorHostedSampleApp.Server.csproj -c Release
+```
 *Nuget package page can be found [here](https://www.nuget.org/packages/BlazorDialog).*
 
-## Known issues
+## ⚠️ Known issues ⚠️ 
 If you try to publish a project after you have already published you have to clean your solution or the publish will fail with the following exception: 
 
 `error MSB4018: The "PInvokeTableGenerator" task failed unexpectedly.`
 
 This happens because the il linker cannot load the existing modified dlls in the obj folder.
-To prevent this you should perform a clean on your solution before every publish. For example:
-```
-> dotnet clean BlazorHostedSampleApp.sln -c Release
-> dotnet publish .\Server\BlazorHostedSampleApp.Server.csproj -c Release
-```
+To prevent this you should perform a clean on your solution before every publish, as displayed above.
 
-## Options
-The following options allow you to disable or customize tasks executed by this package.
+## Configuration
+The following options allow you to customize the tasks executed by this package.
 ### **Custom dll rename extension**
-If you want to use a different extension for renaming dlls, for example ".blazor", add the following property in the published project's .csproj file (**Server** project if blazor hosted).
+If you want to use a different extension for renaming dlls, for example ".blz", add the following property in the **published** project's .csproj file (**Server** project if using blazor hosted).
 ```xml
-<RenameDllsTo>blazor</RenameDllsTo>
+<RenameDllsTo>blz</RenameDllsTo>
 ```
 
 ### **Disable dll rename**
-You can disable dll renaming by adding the following property in the published project's .csproj file (**Server** project if blazor hosted).
+You can disable dll renaming by adding the following property in the **published** project's .csproj file (**Server** project if using blazor hosted).
 ```xml
 <DisableRenamingDlls>true</DisableRenamingDlls>
 ```
