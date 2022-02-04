@@ -3,9 +3,14 @@
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Nuget](https://img.shields.io/nuget/dt/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
 This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware, until Microsoft gives us an official solution. 
-This is a work in progress and success is not guaranteed. 
+This is a work in progress and success is not guaranteed.
 
 ⚠️USE AT YOUR OWN RISK⚠️
+
+## Confirmed success against:
+1. BitDefender Total Security (v26.0.10.45)
+
+> *If you have used this package and helped you bypass any false positives from other security software, please create an issue reporting it so it can be added to this list*
 
 ## What does this package do ?
 This package injects some custom MSBuild tasks that do the following:
