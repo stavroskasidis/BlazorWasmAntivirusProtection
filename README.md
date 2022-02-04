@@ -27,7 +27,6 @@ dotnet add package BlazorWasmAntivirusProtection
 ```
 #Perform a clean first, see "Known Issue" below
 dotnet clean BlazorHostedSampleApp.sln -c Release
-
 dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/BlazorDialog).*
