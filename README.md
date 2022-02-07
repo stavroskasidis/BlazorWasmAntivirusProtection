@@ -11,7 +11,7 @@ Use at your own risk.
 ## Confirmed success against:
 1. BitDefender Total Security (v26.0.10.45)
 2. BitDefender Endpoint Security Tool (v7.4.3.146)
-3. Smoothwall Firewall - [Confirmed by](https://github.com/MudBlazor/MudBlazor/issues/3883#issuecomment-1031357095) @peterthorpe81
+3. Smoothwall Firewall - [Confirmed by](https://github.com/MudBlazor/MudBlazor/issues/3883#issuecomment-1031357095) [peterthorpe81](https://github.com/peterthorpe81)
 
 > 🔔 *If you have used this package and has helped you bypass any false positives from other security software, please consider creating an issue with your experience to contribute to this list.*
 
