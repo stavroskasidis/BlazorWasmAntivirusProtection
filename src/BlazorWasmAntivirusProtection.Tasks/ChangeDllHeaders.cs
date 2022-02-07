@@ -19,21 +19,21 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
             if (DisableChangingDllHeaders)
             {
-                Log.LogMessage(MessageImportance.High, $"Skipping changing .dll headers");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Skipping changing .dll headers");
                 return true;
             }
 
 
-            Log.LogMessage(MessageImportance.High, "Changing .dll headers from MZ to BZ");
+            Log.LogMessage(MessageImportance.High, "BlazorWasmAntivirusProtection: Changing .dll headers from MZ to BZ");
             foreach (var asset in PublishBlazorBootStaticWebAsset)
             {
                 var name = Path.GetFileName(asset.GetMetadata("RelativePath"));
                 if (Path.GetExtension(name) != ".dll") continue;
 
                 ChangeDllHeaderToBz(asset.ItemSpec);
-                Log.LogMessage(MessageImportance.High, $"Changed header of {asset.ItemSpec}");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Changed header of {asset.ItemSpec}");
             }
-            Log.LogMessage(MessageImportance.High, $"Changing .dll headers from MZ to BZ finished");
+            Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Changing .dll headers from MZ to BZ finished");
 
             return true;
         }

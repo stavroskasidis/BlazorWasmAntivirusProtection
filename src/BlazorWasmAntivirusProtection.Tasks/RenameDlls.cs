@@ -22,17 +22,17 @@ namespace BlazorWasmAntivirusProtection.Tasks
         {
             if (DisableRenamingDlls)
             {
-                Log.LogMessage(MessageImportance.High, $"Skipping renaming .dll files");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Skipping renaming .dll files");
                 return true;
             }
-            Log.LogMessage(MessageImportance.High,$"Renaming .dll files to .{RenameDllsTo}");
+            Log.LogMessage(MessageImportance.High,$"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo}");
             var frameworkDir = Directory.GetDirectories(PublishDir, "_framework", SearchOption.AllDirectories).First();
             foreach(var file in Directory.GetFiles(frameworkDir,"*.*", SearchOption.AllDirectories))
             {
                 if (file.EndsWith(".dll") || file.EndsWith(".dll.gz") || file.EndsWith(".dll.br"))
                 {
                     var newName = file.Replace(".dll", $".{RenameDllsTo}");
-                    Log.LogMessage(MessageImportance.High, $"Renaming \"{file}\" to \"{newName}\"");
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming \"{file}\" to \"{newName}\"");
                     if (File.Exists(newName)) File.Delete(newName);
                     File.Move(file, newName);
                 }
@@ -43,14 +43,14 @@ namespace BlazorWasmAntivirusProtection.Tasks
             var serviceWorkerPath = Path.Combine(frameworkDir, "service-worker-assets.js");
 
 
-            Log.LogMessage(MessageImportance.High, $"Updating \"{bootJsonPath}\"");
+            Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{bootJsonPath}\"");
             var bootJson = File.ReadAllText(bootJsonPath);
             bootJson = bootJson.Replace(".dll", $".{RenameDllsTo}");
             File.WriteAllText(bootJsonPath, bootJson);
             
             if (File.Exists(serviceWorkerPath))
             {
-                Log.LogMessage(MessageImportance.High, $"Updating \"{serviceWorkerPath}\"");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{serviceWorkerPath}\"");
                 var serviceWorker = File.ReadAllText(serviceWorkerPath);
                 serviceWorker = serviceWorker.Replace(".dll", $".{RenameDllsTo}");
                 File.WriteAllText(serviceWorkerPath, serviceWorker);
@@ -58,15 +58,15 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
             if (File.Exists(bootJsonGzPath))
             {
-                Log.LogMessage(MessageImportance.High, $"Deleting \"{bootJsonGzPath}\"");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonGzPath}\"");
                 File.Delete(bootJsonGzPath);
             }
             if (File.Exists(bootJsonBrPath))
             {
-                Log.LogMessage(MessageImportance.High, $"Deleting \"{bootJsonBrPath}\"");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonBrPath}\"");
                 File.Delete(bootJsonBrPath);
             }
-            Log.LogMessage(MessageImportance.High, $"Renaming .dll files to .{RenameDllsTo} finished");
+            Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo} finished");
 
             return true;
         }

@@ -3,11 +3,19 @@
                AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.RenameDlls"
             AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
+	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.CleanOldDlls"
+		AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 
 	<PropertyGroup>
 		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ChangeDllHeaders</ComputeBlazorExtensionsDependsOn>
+		<WasmNestedPublishAppDependsOn>_CleanOldDlls;$(WasmNestedPublishAppDependsOn)</WasmNestedPublishAppDependsOn>
+	
 	</PropertyGroup>
-
+	
+	<Target Name="_CleanOldDlls">
+		<CleanOldDlls IntermediateLinkDir="$(IntermediateLinkDir)"></CleanOldDlls>
+	</Target>
+	
 	<Target Name="_ChangeDllHeaders">
 		<ChangeDllHeaders PublishBlazorBootStaticWebAsset="@(PublishBlazorBootStaticWebAsset)" DisableChangingDllHeaders="$(DisableChangingDllHeaders)"></ChangeDllHeaders>
 	</Target>
