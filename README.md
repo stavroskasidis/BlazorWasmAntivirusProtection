@@ -1,6 +1,6 @@
 ﻿# Blazor Wasm Antivirus Protection
 
-[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Nuget](https://img.shields.io/nuget/dt/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
+[![Nuget (with prereleases)](https://img.shields.io/nuget/v/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Nuget](https://img.shields.io/nuget/dt/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
 This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware,  [until Microsoft gives us an official solution](https://github.com/dotnet/aspnetcore/issues/36978). 
 This is a work in progress and success is not guaranteed. 
