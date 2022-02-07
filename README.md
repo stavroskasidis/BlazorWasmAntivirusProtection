@@ -19,7 +19,7 @@ Use at your own risk.
 This package injects some custom MSBuild tasks that do the following:
 1. Changes the MZ header of all client assemblies to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
 2. Renames the extension of all client assemblies from .dll to .bin
-3. Adds module that contains a `beforeStart` js blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded but before loaded by dotnet.wasm
+3. Adds a lib.module.js that contains a `beforeStart` blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded but before loaded by dotnet.wasm
 
 ## How to use
 1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using blazor wasm hosted) projects
@@ -30,6 +30,7 @@ dotnet add package BlazorWasmAntivirusProtection
 2. Publish your app in Release mode and test it!
 ```
 #Perform a clean first, see "Known Issue" below
+
 dotnet clean BlazorHostedSampleApp.sln -c Release
 dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
