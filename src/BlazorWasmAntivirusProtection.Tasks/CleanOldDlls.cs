@@ -5,6 +5,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
     using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
+    using System.Linq;
     using System.Net.Http;
     using System.Text;
 
@@ -15,19 +16,17 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public override bool Execute()
         {
-            Debugger.Launch();
             if (!Directory.Exists(IntermediateLinkDir)) return true;
 
-            Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Cleaning old .dll files");
-
-            foreach(var file in Directory.GetFiles(IntermediateLinkDir, "*.dll"))
+            var linkSemaphore = Path.Combine(IntermediateLinkDir, "Link.semaphore");
+            var existingDll = Directory.GetFiles(IntermediateLinkDir, "*.dll").FirstOrDefault();
+            if (File.Exists(linkSemaphore) && existingDll != null && IsDllHeaderBz(existingDll))
             {
-                if (IsDllHeaderBz(file))
-                {
-                    File.Delete(file);
-                }
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Cleaning old .dll files");
+                //We delete the Link.semaphore file to force a regeneration of objs in the IntermediateLinkDir
+                //This is to remove remnants of a previous publish
+                File.Delete(linkSemaphore);
             }
-
 
             return true;
         }

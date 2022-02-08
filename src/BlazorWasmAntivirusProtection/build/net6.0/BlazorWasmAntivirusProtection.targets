@@ -8,11 +8,9 @@
 
 	<PropertyGroup>
 		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ChangeDllHeaders</ComputeBlazorExtensionsDependsOn>
-		<WasmNestedPublishAppDependsOn>_CleanOldDlls;$(WasmNestedPublishAppDependsOn)</WasmNestedPublishAppDependsOn>
-	
 	</PropertyGroup>
 	
-	<Target Name="_CleanOldDlls">
+	<Target Name="_CleanOldDlls" BeforeTargets="PrepareForILLink">
 		<CleanOldDlls IntermediateLinkDir="$(IntermediateLinkDir)"></CleanOldDlls>
 	</Target>
 	
