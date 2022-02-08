@@ -22,7 +22,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
             var existingDll = Directory.GetFiles(IntermediateLinkDir, "*.dll").FirstOrDefault();
             if (File.Exists(linkSemaphore) && existingDll != null && IsDllHeaderBz(existingDll))
             {
-                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Cleaning old .dll files");
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Cleaning old .dll files in \"{IntermediateLinkDir}\"");
                 //We delete the Link.semaphore file to force a regeneration of objs in the IntermediateLinkDir
                 //This is to remove remnants of a previous publish
                 File.Delete(linkSemaphore);
