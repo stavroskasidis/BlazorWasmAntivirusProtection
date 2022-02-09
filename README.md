@@ -23,7 +23,7 @@ This package injects some custom MSBuild tasks that do the following during publ
 ```
 dotnet add package BlazorWasmAntivirusProtection
 ``` 
-2. (Progressive Web Application Only): If you are using the Blazor Wasm PWA template, update the following line in your `service-worker.published.js` file to include `.bin` files:
+2. (Progressive Web Applications **only**): If you are using the Blazor Wasm PWA template, update the following line in your `service-worker.published.js` file to include `.bin` files:
 
 ```js
 const offlineAssetsInclude = [/\.bin$/, /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
