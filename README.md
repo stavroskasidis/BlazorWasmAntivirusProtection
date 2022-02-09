@@ -26,8 +26,13 @@ This package injects some custom MSBuild tasks that do the following:
 ```
 dotnet add package BlazorWasmAntivirusProtection
 ``` 
+2. (Progressive Web Application Only): If you are using the Blazor Wasm PWA template, update the following line in your `service-worker.published.js` file to include `.bin` files:
 
-2. Publish your app in Release mode and test it!
+```js
+const offlineAssetsInclude = [/\.bin$/, /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
+```
+
+3. Publish your app in Release mode and test it!
 ```
 dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
@@ -62,7 +67,13 @@ This work was inspired by the post in https://github.com/dotnet/aspnetcore/issue
 
 ## Release Notes
 
-<details open="open"><summary>1.2</summary>
+<details open="open"><summary>1.3</summary>
+    
+>- Added support for Blazor Wasm PWA apps
+</details>
+
+
+<details><summary>1.2</summary>
     
 >- Fixed sequential publishing issue.
 </details>
