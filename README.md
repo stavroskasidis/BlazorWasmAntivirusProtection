@@ -13,10 +13,10 @@ This package attempts to guard against false positives from antiviruses that fla
 > 🔔 *If you have used this package and has helped you bypass any false positives from other security software, please consider creating an issue with your experience to contribute to this list.*
 
 ## What does this package do ?
-This package injects some custom MSBuild tasks that do the following:
-1. Changes the MZ header of all client assemblies to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
-2. Renames the extension of all client assemblies from .dll to .bin
-3. Adds a lib.module.js that contains a `beforeStart` blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded but before loaded by dotnet.wasm
+This package injects some custom MSBuild tasks that do the following during publishing:
+1. Change the MZ header of all client assemblies to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
+2. Rename the extension of all client assemblies from .dll to .bin
+3. Add a lib.module.js that contains a `beforeStart` blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded.
 
 ## How to use
 1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using blazor wasm hosted) projects
