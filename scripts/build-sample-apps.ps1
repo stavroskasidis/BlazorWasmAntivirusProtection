@@ -28,13 +28,12 @@ function Confirm-Process {
     }
 }
 
-Write-Message "Cleaning ..."
-dotnet clean ../sampleapps/BlazorHostedSampleApp/BlazorHostedSampleApp.sln -c Release
-Confirm-PreviousCommand
-
-Write-Message "Building ..."
+Write-Message "Building Hosted Sample App ..."
 dotnet publish ../sampleapps/BlazorHostedSampleApp/Server/BlazorHostedSampleApp.Server.csproj -c Release -o ../artifacts/sample-apps/BlazorHostedSampleApp
 Confirm-PreviousCommand
 
+Write-Message "Building Hosted PWA Sample App ..."
+dotnet publish ../sampleapps/BlazorHostedSamplePwa/Server/BlazorHostedSamplePwa.Server.csproj -c Release -o ../artifacts/sample-apps/BlazorHostedSamplePwa
+Confirm-PreviousCommand
 
 Write-Message "Build completed successfully"
