@@ -27,7 +27,9 @@ namespace BlazorWasmAntivirusProtection.Tasks
             }
             Log.LogMessage(MessageImportance.High,$"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo}");
             var frameworkDir = Directory.GetDirectories(PublishDir, "_framework", SearchOption.AllDirectories).First();
-            foreach(var file in Directory.GetFiles(frameworkDir,"*.*", SearchOption.AllDirectories))
+            var wwwrootDir = Directory.GetDirectories(PublishDir, "wwwroot", SearchOption.AllDirectories).First();
+
+            foreach (var file in Directory.GetFiles(frameworkDir,"*.*", SearchOption.AllDirectories))
             {
                 if (file.EndsWith(".dll") || file.EndsWith(".dll.gz") || file.EndsWith(".dll.br"))
                 {
@@ -40,7 +42,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
             var bootJsonPath = Path.Combine(frameworkDir, "blazor.boot.json");
             var bootJsonGzPath = Path.Combine(frameworkDir, "blazor.boot.json.gz");
             var bootJsonBrPath = Path.Combine(frameworkDir, "blazor.boot.json.br");
-            var serviceWorkerPath = Path.Combine(frameworkDir, "service-worker-assets.js");
+            var serviceWorkerPath = Path.Combine(wwwrootDir, "service-worker-assets.js");
 
 
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{bootJsonPath}\"");

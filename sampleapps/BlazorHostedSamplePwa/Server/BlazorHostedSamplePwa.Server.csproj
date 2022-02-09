@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.2" />
+		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.2.0-beta" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Client\BlazorHostedSamplePwa.Client.csproj" />
+		<ProjectReference Include="..\Shared\BlazorHostedSamplePwa.Shared.csproj" />
+	</ItemGroup>
+
+
+</Project>
