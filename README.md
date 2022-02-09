@@ -2,10 +2,7 @@
 
 [![Nuget (with prereleases)](https://img.shields.io/nuget/v/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Nuget](https://img.shields.io/nuget/dt/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
-This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware,  [until Microsoft gives us an official solution](https://github.com/dotnet/aspnetcore/issues/36978). 
-This is a work in progress and success is not guaranteed. 
-
-Use at your own risk.
+This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware,  [until (or if) Microsoft gives us an official solution](https://github.com/dotnet/aspnetcore/issues/36978).
 
 
 ## Confirmed success against:
@@ -36,7 +33,7 @@ const offlineAssetsInclude = [/\.bin$/, /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, 
 ```
 dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
-*Nuget package page can be found [here](https://www.nuget.org/packages/BlazorDialog).*
+*Nuget package page can be found [here](https://www.nuget.org/packages/BlazorWasmAntivirusProtection).*
 
 ## Configuration
 The following options allow you to customize the tasks executed by this package.
