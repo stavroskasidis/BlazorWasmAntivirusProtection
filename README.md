@@ -63,8 +63,13 @@ You can find a sample app using this package [here](https://blazor-antivirus-blo
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
+<details open="open"><summary>1.4</summary>
+    
+>- Added support for Multiple Blazor Wasm apps under the same Server project [#8](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/8)
+</details>
 
-<details open="open"><summary>1.3</summary>
+
+<details><summary>1.3</summary>
     
 >- Added support for Blazor Wasm PWA apps
 </details>

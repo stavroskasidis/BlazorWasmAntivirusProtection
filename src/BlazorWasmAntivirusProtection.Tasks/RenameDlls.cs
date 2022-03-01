@@ -23,7 +23,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
         public override bool Execute()
         {
 //#if DEBUG
-//            Debugger.Launch();
+//            System.Diagnostics.Debugger.Launch();
 //#endif
             if (DisableRenamingDlls)
             {
@@ -31,60 +31,62 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 return true;
             }
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo}");
-            var frameworkDir = Directory.GetDirectories(PublishDir, "_framework", SearchOption.AllDirectories).First();
-            var wwwrootDir = Directory.GetDirectories(PublishDir, "wwwroot", SearchOption.AllDirectories).First();
-
-            foreach (var file in Directory.GetFiles(frameworkDir, "*.*", SearchOption.AllDirectories))
+            var frameworkDirs = Directory.GetDirectories(PublishDir, "_framework", SearchOption.AllDirectories);
+            foreach(var frameworkDir in frameworkDirs)
             {
-                if (file.EndsWith(".dll") || file.EndsWith(".dll.gz") || file.EndsWith(".dll.br"))
+                foreach (var file in Directory.GetFiles(frameworkDir, "*.*", SearchOption.AllDirectories))
                 {
-                    var newName = file.Replace(".dll", $".{RenameDllsTo}");
-                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming \"{file}\" to \"{newName}\"");
-                    if (File.Exists(newName)) File.Delete(newName);
-                    File.Move(file, newName);
+                    if (file.EndsWith(".dll") || file.EndsWith(".dll.gz") || file.EndsWith(".dll.br"))
+                    {
+                        var newName = file.Replace(".dll", $".{RenameDllsTo}");
+                        Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming \"{file}\" to \"{newName}\"");
+                        if (File.Exists(newName)) File.Delete(newName);
+                        File.Move(file, newName);
+                    }
+                }
+                var bootJsonPath = Path.Combine(frameworkDir, "blazor.boot.json");
+                var bootJsonGzPath = Path.Combine(frameworkDir, "blazor.boot.json.gz");
+                var bootJsonBrPath = Path.Combine(frameworkDir, "blazor.boot.json.br");
+                var serviceWorkerPathAssets = Path.Combine(frameworkDir, $"..{Path.DirectorySeparatorChar}service-worker-assets.js");
+
+
+                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{bootJsonPath}\"");
+                var bootJson = File.ReadAllText(bootJsonPath);
+                bootJson = bootJson.Replace(".dll", $".{RenameDllsTo}");
+                File.WriteAllText(bootJsonPath, bootJson);
+
+                if (File.Exists(serviceWorkerPathAssets))
+                {
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{serviceWorkerPathAssets}\"");
+                    var serviceWorkerAssets = File.ReadAllText(serviceWorkerPathAssets);
+                    serviceWorkerAssets = serviceWorkerAssets.Replace(".dll", $".{RenameDllsTo}");
+                    var assetsManifest = JsonSerializer.Deserialize<AssetsManifest>(serviceWorkerAssets.Replace("self.assetsManifest = ", "").Trim().TrimEnd(';'));
+                    var bootJsonAssetEntry = assetsManifest.assets.First(x => x.url.EndsWith("blazor.boot.json"));
+                    bootJsonAssetEntry.hash = $"sha256-{ComputeSha256Hash(bootJson)}";
+                    //var bootJsonModel = JsonSerializer.Deserialize<BlazorBoot>(bootJson);
+                    //foreach(var assembly in bootJsonModel.resources.assembly)
+                    //{
+                    //    var assemblyName = assembly.Key;
+                    //    var assemblyHash = assembly.Value;
+                    //    var asset = assetsManifest.assets.First(x => x.url.EndsWith(assemblyName));
+                    //    asset.hash = assemblyHash;
+                    //}
+                    serviceWorkerAssets = $"self.assetsManifest = {JsonSerializer.Serialize(assetsManifest, new JsonSerializerOptions { WriteIndented = true })};";
+                    File.WriteAllText(serviceWorkerPathAssets, serviceWorkerAssets);
+                }
+
+                if (File.Exists(bootJsonGzPath))
+                {
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonGzPath}\"");
+                    File.Delete(bootJsonGzPath);
+                }
+                if (File.Exists(bootJsonBrPath))
+                {
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonBrPath}\"");
+                    File.Delete(bootJsonBrPath);
                 }
             }
-            var bootJsonPath = Path.Combine(frameworkDir, "blazor.boot.json");
-            var bootJsonGzPath = Path.Combine(frameworkDir, "blazor.boot.json.gz");
-            var bootJsonBrPath = Path.Combine(frameworkDir, "blazor.boot.json.br");
-            var serviceWorkerPathAssets = Path.Combine(wwwrootDir, "service-worker-assets.js");
-
-
-            Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{bootJsonPath}\"");
-            var bootJson = File.ReadAllText(bootJsonPath);
-            bootJson = bootJson.Replace(".dll", $".{RenameDllsTo}");
-            File.WriteAllText(bootJsonPath, bootJson);
-
-            if (File.Exists(serviceWorkerPathAssets))
-            {
-                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{serviceWorkerPathAssets}\"");
-                var serviceWorkerAssets = File.ReadAllText(serviceWorkerPathAssets);
-                serviceWorkerAssets = serviceWorkerAssets.Replace(".dll", $".{RenameDllsTo}");
-                var assetsManifest = JsonSerializer.Deserialize<AssetsManifest>(serviceWorkerAssets.Replace("self.assetsManifest = ", "").Trim().TrimEnd(';'));
-                var bootJsonAssetEntry = assetsManifest.assets.First(x => x.url.EndsWith("blazor.boot.json"));
-                bootJsonAssetEntry.hash = $"sha256-{ComputeSha256Hash(bootJson)}";
-                //var bootJsonModel = JsonSerializer.Deserialize<BlazorBoot>(bootJson);
-                //foreach(var assembly in bootJsonModel.resources.assembly)
-                //{
-                //    var assemblyName = assembly.Key;
-                //    var assemblyHash = assembly.Value;
-                //    var asset = assetsManifest.assets.First(x => x.url.EndsWith(assemblyName));
-                //    asset.hash = assemblyHash;
-                //}
-                serviceWorkerAssets = $"self.assetsManifest = {JsonSerializer.Serialize(assetsManifest, new JsonSerializerOptions { WriteIndented = true})};";
-                File.WriteAllText(serviceWorkerPathAssets, serviceWorkerAssets);
-            }
-
-            if (File.Exists(bootJsonGzPath))
-            {
-                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonGzPath}\"");
-                File.Delete(bootJsonGzPath);
-            }
-            if (File.Exists(bootJsonBrPath))
-            {
-                Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonBrPath}\"");
-                File.Delete(bootJsonBrPath);
-            }
+            
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo} finished");
 
             return true;

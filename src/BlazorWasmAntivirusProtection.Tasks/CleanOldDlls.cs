@@ -16,6 +16,9 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public override bool Execute()
         {
+//#if DEBUG
+//            System.Diagnostics.Debugger.Launch();
+//#endif
             if (!Directory.Exists(IntermediateLinkDir)) return true;
 
             var linkSemaphore = Path.Combine(IntermediateLinkDir, "Link.semaphore");

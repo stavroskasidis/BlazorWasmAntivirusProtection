@@ -15,6 +15,9 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public override bool Execute()
         {
+//#if DEBUG
+//            System.Diagnostics.Debugger.Launch();
+//#endif
             if (PublishBlazorBootStaticWebAsset.Length == 0) return true;
 
             if (DisableChangingDllHeaders)
