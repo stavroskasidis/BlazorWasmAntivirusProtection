@@ -25,6 +25,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSamplePwa.Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSamplePwa.Shared", "..\sampleapps\BlazorHostedSamplePwa\Shared\BlazorHostedSamplePwa.Shared.csproj", "{17E4BD1B-D372-4AD1-8EF1-61D2040CF45A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{298EA9BF-17D3-49E2-9036-8D8B9202E266}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\azure-pipelines-sample-apps.yml = ..\azure-pipelines-sample-apps.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\global.json = ..\global.json
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
