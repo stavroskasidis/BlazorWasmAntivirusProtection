@@ -14,9 +14,12 @@ This package attempts to guard against false positives from antiviruses that fla
 
 ## What does this package do ?
 This package injects some custom MSBuild tasks that do the following during publishing:
-1. Change the MZ header of all client assemblies to BZ, a custom header, so that firewalls and antiviruses don't see them as executables. (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
-2. Rename the extension of all client assemblies from .dll to .bin
-3. Add a lib.module.js that contains a `beforeStart` blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the MZ header of the assemblies after downloaded.
+1. Obfuscates the all client assemblies so that firewalls and antiviruses don't see them as executables. Two obfuscation methods are supported:
+   * Using a key to XOR all client assemblies (**default**).
+   * **OR**
+   * Changing the MZ header of all client assemblies to BZ, a custom header (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
+2. Renames the extension of all client assemblies from **.dll** to **.bin**
+3. Adds a lib.module.js that contains a `beforeStart` blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the obfuscation of the assemblies after downloaded, but before loaded by dotnet.wasm
 
 ## How to use
 1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using blazor wasm hosted) projects
@@ -49,10 +52,21 @@ You can disable dll renaming by adding the following property in the **published
 <DisableRenamingDlls>true</DisableRenamingDlls>
 ```
 
-### **Disable dll header changing**
-You can disable dll header changing by adding the following property in your **Client** project's .csproj file.
+### **Changing or disabling dll obfuscation**
+You can change or disable dll obfuscation by adding the following property in your **Client** project's .csproj file. Supported values: 
+- `None`
+- `ChangeHeaders`
+- `Xor` (default)
 ```xml
-<DisableChangingDllHeaders>true</DisableChangingDllHeaders>
+<!-- Disables dll obfuscation -->
+<ObfuscationMode>None</ObfuscationMode> 
+```
+
+### **Changing the XOR obfuscation key**
+You can change the key that is used for the XOR obfuscation adding the following property in your **Client** project's .csproj file.
+```xml
+<!-- Changes the dll obfuscation xor key -->
+<XorKey>mykey</XorKey>
 ```
 
 ## Samples / Demo
@@ -63,7 +77,12 @@ You can find a sample app using this package [here](https://blazor-antivirus-blo
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
-<details open="open"><summary>1.4</summary>
+<details open="open"><summary>1.5</summary>
+    
+>- Added support for multiple dll obfuscations, changing the default to XORing the dlls instead of just changing the headers.
+</details>
+
+<details><summary>1.4</summary>
     
 >- Added support for Multiple Blazor Wasm apps under the same Server project [#8](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/8)
 </details>
