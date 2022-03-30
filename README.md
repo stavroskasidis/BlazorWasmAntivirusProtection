@@ -14,7 +14,7 @@ This package attempts to guard against false positives from antiviruses that fla
 
 ## What does this package do ?
 This package injects some custom MSBuild tasks that do the following during publishing:
-1. Obfuscates the all client assemblies so that firewalls and antiviruses don't see them as executables. Two obfuscation methods are supported:
+1. Obfuscates all client assemblies so that firewalls and antiviruses don't see them as executables. Obfuscation methods supported:
    * Using a key to XOR all client assemblies (**default**).
    * **OR**
    * Changing the MZ header of all client assemblies to BZ, a custom header (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
