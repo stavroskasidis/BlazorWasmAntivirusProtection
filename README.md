@@ -13,7 +13,7 @@ This package attempts to guard against false positives from antiviruses that fla
 > 🔔 *If you have used this package and has helped you bypass any false positives from other security software, please consider creating an issue with your experience to contribute to this list.*
 
 ## What does this package do ?
-This package injects some custom MSBuild tasks that do the following:
+This package injects some custom MSBuild tasks that do the following during publishing:
 1. Obfuscates the all client assemblies so that firewalls and antiviruses don't see them as executables. Two obfuscation methods are supported:
    * Using a key to XOR all client assemblies (**default**).
    * **OR**
@@ -26,7 +26,7 @@ This package injects some custom MSBuild tasks that do the following:
 ```
 dotnet add package BlazorWasmAntivirusProtection
 ``` 
-2. (Progressive Web Application Only): If you are using the Blazor Wasm PWA template, update the following line in your `service-worker.published.js` file to include `.bin` files:
+2. (Progressive Web Applications **only**): If you are using the Blazor Wasm PWA template, update the following line in your `service-worker.published.js` file to include `.bin` files:
 
 ```js
 const offlineAssetsInclude = [/\.bin$/, /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
