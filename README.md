@@ -17,7 +17,7 @@ This package injects some custom MSBuild tasks that do the following during publ
 1. Obfuscates all client assemblies so that firewalls and antiviruses don't see them as executables. Obfuscation methods supported:
    * Using a key to XOR all client assemblies (**default**).
    * **OR**
-   * Changing the MZ header of all client assemblies to BZ, a custom header (more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
+   * Changing the MZ header of all client assemblies to BZ, a custom header (less aggressive - more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable))
 2. Renames the extension of all client assemblies from **.dll** to **.bin**
 3. Adds a lib.module.js that contains a `beforeStart` blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the obfuscation of the assemblies after downloaded, but before loaded by dotnet.wasm
 
