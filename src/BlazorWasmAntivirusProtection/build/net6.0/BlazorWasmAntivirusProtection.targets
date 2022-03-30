@@ -1,5 +1,5 @@
 <Project>
-	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.ChangeDllHeaders"
+	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.ObfuscateDlls"
                AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.RenameDlls"
             AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
@@ -7,17 +7,25 @@
 		AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 
 	<PropertyGroup>
-		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ChangeDllHeaders</ComputeBlazorExtensionsDependsOn>
+		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ObfuscateDlls</ComputeBlazorExtensionsDependsOn>
 	</PropertyGroup>
 	
+	<!-- Runs in the client project -->
 	<Target Name="_CleanOldDlls" BeforeTargets="PrepareForILLink">
 		<CleanOldDlls IntermediateLinkDir="$(IntermediateLinkDir)"></CleanOldDlls>
 	</Target>
-	
-	<Target Name="_ChangeDllHeaders">
-		<ChangeDllHeaders PublishBlazorBootStaticWebAsset="@(PublishBlazorBootStaticWebAsset)" DisableChangingDllHeaders="$(DisableChangingDllHeaders)"></ChangeDllHeaders>
+
+	<!-- Runs in the client project -->
+	<Target Name="_ObfuscateDlls">
+		<ObfuscateDlls PublishBlazorBootStaticWebAsset="@(PublishBlazorBootStaticWebAsset)" 
+						  SettingsPath="$(IntermediateOutputPath)avp-settings.json"
+						  ObfuscationMode="$(ObfuscationMode)"
+						  XorKey="$(XorKey)">
+			<Output TaskParameter="Extension" ItemName="BlazorPublishExtension"/>	
+		</ObfuscateDlls>
 	</Target>
 
+	<!-- Runs in the published project (server if hosted)-->
 	<Target Name="_ChangeDLLFileExtensions" AfterTargets="Publish">
 		<RenameDlls PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)"></RenameDlls>
 	</Target>

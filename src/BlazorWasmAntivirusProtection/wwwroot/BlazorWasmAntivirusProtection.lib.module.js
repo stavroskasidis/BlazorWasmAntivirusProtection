@@ -1,5 +1,13 @@
 export async function beforeStart(wasmOptions, extensions) {
+    if (!extensions || !extensions.avpsettings) {
+        return;
+    }
+
     try {
+        const integrity = extensions.avpsettings['avp-settings.json'];
+        const settingsResponse = await fetch('avp-settings.json', { integrity: integrity, cache: 'no-cache' });
+        const settings = await settingsResponse.json();
+
         //This is to support custom Blazor.start with a custom loadBootResource 
         var existingLoadBootResouce = wasmOptions.loadBootResource;
 
@@ -16,7 +24,7 @@ export async function beforeStart(wasmOptions, extensions) {
                     return defaultUri;
                 }
             }
-                
+
 
             var fetchPromise = null;
             if (existingLoaderResponse) {
@@ -36,22 +44,28 @@ export async function beforeStart(wasmOptions, extensions) {
                     integrity: integrity,
                 });
             }
-            
+
             var resp = fetchPromise.then(response => {
                 return response.arrayBuffer().then(buffer => {
                     return { buffer: buffer, headers: response.headers };
                 });
             }).then(responseResult => {
                 var data = new Uint8Array(responseResult.buffer);
-                if (data[0] != 77) {
+                if (settings.obfuscationMode == 1) {//Changed Headers
                     console.log("Restoring binary header: " + name);
                     data[0] = 77; //This restores header from BZ to MZ
+                }
+                else if (settings.obfuscationMode == 2) { //Xored dll
+                    console.log("Restoring binary file Xor: " + name);
+                    var key = settings.xorKey;
+                    for (let i = 0; i < data.length; i++)
+                        data[i] = data[i] ^ key.charCodeAt(i % key.length); //This reverses the Xor'ing of the dll
                 }
                 var resp = new Response(data, { "status": 200, headers: responseResult.headers });
                 return resp;
             });
 
-           
+
             return resp;
 
         }
