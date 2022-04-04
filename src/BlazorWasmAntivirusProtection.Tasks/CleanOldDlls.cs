@@ -41,8 +41,8 @@ namespace BlazorWasmAntivirusProtection.Tasks
             var buffer = new byte[2];
             reader.Read(buffer, 0 , buffer.Length);
 
-            var bz = Encoding.ASCII.GetBytes("MZ");
-            return bz[0] == buffer[0] && bz[1] == buffer[1];
+            var mz = Encoding.ASCII.GetBytes("MZ");
+            return mz[0] == buffer[0] && mz[1] == buffer[1];
         }
     }
 }
