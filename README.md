@@ -78,7 +78,12 @@ You can find a sample app using this package [here](https://blazor-antivirus-blo
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
-<details open="open"><summary>1.5</summary>
+<details open="open"><summary>1.6</summary>
+    
+>- Fix for publishing twice before cleaning (regression) [#13](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/13)
+</details>
+
+<details><summary>1.5</summary>
     
 >- Added support for multiple dll obfuscations, changing the default to XORing the dlls instead of just changing the headers.
 </details>

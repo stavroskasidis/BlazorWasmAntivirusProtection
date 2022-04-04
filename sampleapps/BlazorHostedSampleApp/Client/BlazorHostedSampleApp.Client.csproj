@@ -17,7 +17,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
-		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.5.0-beta" />
+		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.6.0-beta" />
 	</ItemGroup>
 
 	<ItemGroup>
