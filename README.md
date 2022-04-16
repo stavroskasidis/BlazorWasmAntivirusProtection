@@ -13,7 +13,7 @@ This package attempts to guard against false positives from antiviruses that fla
 
 > 📣 *If you have used this package and has helped you bypass any false positives from other security software, please consider creating an issue with your experience to contribute to this list.*
 
-> 🛡️ *You can use [Virustotal](https://www.virustotal.com/gui/home/url) for some indication of how antiviruses view your site.*
+> 🛡️ *You can use [virustotal](https://www.virustotal.com/gui/home/url)'s online scanner for some indication of how various antiviruses view your site.*
 
 ## What does this package do ?
 This package injects some custom MSBuild tasks that do the following during publishing:
