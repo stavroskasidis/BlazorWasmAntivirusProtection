@@ -4,7 +4,7 @@ using BlazorHostedSampleApp.Shared;
 namespace BlazorHostedSampleApp.Server.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("app/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

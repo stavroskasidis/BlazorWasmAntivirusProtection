@@ -23,14 +23,16 @@ else
 
 app.UseHttpsRedirection();
 
-app.UseBlazorFrameworkFiles();
+
+app.UseBlazorFrameworkFiles("/app");
 app.UseStaticFiles();
+app.UseStaticFiles("/app");
 
 app.UseRouting();
 
 
 app.MapRazorPages();
 app.MapControllers();
-app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("/app/{*path:nonfile}", "app/index.html");
 
 app.Run();
