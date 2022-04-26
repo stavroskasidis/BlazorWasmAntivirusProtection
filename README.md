@@ -10,6 +10,7 @@ This package attempts to guard against false positives from antiviruses that fla
 2. BitDefender Endpoint Security Tool (v7.4.3.146)
 3. Smoothwall Firewall - [Confirmed by](https://github.com/MudBlazor/MudBlazor/issues/3883#issuecomment-1031357095) [peterthorpe81](https://github.com/peterthorpe81)
 4. Sophos Endpoint Agent - [Confirmed by](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/12) [peterthorpe81](https://github.com/peterthorpe81)
+5. Forcepoint Firewall - [Confirmed by](https://github.com/dotnet/aspnetcore/issues/36978#issuecomment-1109822288) [egil](https://github.com/egil)
 
 > 📣 *If you have used this package and has helped you bypass any false positives from other security software, please consider creating an issue with your experience to contribute to this list.*
 
