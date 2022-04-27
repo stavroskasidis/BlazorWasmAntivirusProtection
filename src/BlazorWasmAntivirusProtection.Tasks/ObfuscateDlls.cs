@@ -13,9 +13,14 @@ namespace BlazorWasmAntivirusProtection.Tasks
     {
         [Required]
         public ITaskItem[] PublishBlazorBootStaticWebAsset { get; set; }
+
         [Required]
         public string SettingsPath { get; set; }
+
+        public string OriginalBlazorCacheBootResources { get; set; }
+
         public string ObfuscationMode { get; set; } = Tasks.ObfuscationMode.Xor.ToString();
+
         public string XorKey { get; set; } = "antiviruses suck!";
 
         [Output]
@@ -68,7 +73,8 @@ namespace BlazorWasmAntivirusProtection.Tasks
             var settings = JsonSerializer.Serialize(new
             {
                 obfuscationMode = obfuscationMode,
-                xorKey = XorKey
+                xorKey = XorKey,
+                cacheBootResources = OriginalBlazorCacheBootResources
             });
             File.WriteAllText(SettingsPath, settings);
 

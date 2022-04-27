@@ -12,13 +12,19 @@
 	
 	<!-- Runs in the client project -->
 	<Target Name="_CleanOldDlls" BeforeTargets="PrepareForILLink">
+		<PropertyGroup>
+			<OriginalBlazorCacheBootResources>$(BlazorCacheBootResources)</OriginalBlazorCacheBootResources>
+			<BlazorCacheBootResources>false</BlazorCacheBootResources>
+		</PropertyGroup>
 		<CleanOldDlls IntermediateLinkDir="$(IntermediateLinkDir)"></CleanOldDlls>
 	</Target>
 
 	<!-- Runs in the client project -->
 	<Target Name="_ObfuscateDlls">
+						  
 		<ObfuscateDlls PublishBlazorBootStaticWebAsset="@(PublishBlazorBootStaticWebAsset)" 
 						  SettingsPath="$(IntermediateOutputPath)avp-settings.json"
+					      OriginalBlazorCacheBootResources="$(OriginalBlazorCacheBootResources)"
 						  ObfuscationMode="$(ObfuscationMode)"
 						  XorKey="$(XorKey)">
 			<Output TaskParameter="Extension" ItemName="BlazorPublishExtension"/>	
