@@ -86,9 +86,9 @@ export async function afterStarted(blazor) {
 // ======================
 
 const networkFetchCacheMode = 'no-cache';
-
+let testAnchor;
 function toAbsoluteUri(relativeUri) {
-    var testAnchor = document.createElement('a');
+    testAnchor = testAnchor || document.createElement('a');
     testAnchor.href = relativeUri;
     return testAnchor.href;
 }
