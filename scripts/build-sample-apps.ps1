@@ -28,6 +28,15 @@ function Confirm-Process {
     }
 }
 
+Write-Message "Building package test version..."
+dotnet build ../src/BlazorWasmAntivirusProtection.Tasks/BlazorWasmAntivirusProtection.Tasks.csproj -c Release
+dotnet build ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Release /p:VersionSuffix="test"
+Confirm-PreviousCommand
+
+Write-Message "Creating test nuget package ..."
+dotnet pack ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Release /p:VersionSuffix="test" -o ../artifacts/nuget
+Confirm-PreviousCommand
+
 Write-Message "Building Hosted Sample App ..."
 dotnet publish ../sampleapps/BlazorHostedSampleApp/Server/BlazorHostedSampleApp.Server.csproj -c Release -o ../artifacts/sample-apps/BlazorHostedSampleApp
 Confirm-PreviousCommand
