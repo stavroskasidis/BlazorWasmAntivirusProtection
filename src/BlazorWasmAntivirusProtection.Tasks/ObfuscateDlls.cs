@@ -13,10 +13,15 @@ namespace BlazorWasmAntivirusProtection.Tasks
     {
         [Required]
         public ITaskItem[] PublishBlazorBootStaticWebAsset { get; set; }
+
         [Required]
         public string SettingsPath { get; set; }
+
+        public bool OriginalBlazorCacheBootResources { get; set; }
+
         public string ObfuscationMode { get; set; } = Tasks.ObfuscationMode.Xor.ToString();
-        public string XorKey { get; set; } = "antiviruses suck!";
+
+        public string XorKey { get; set; } = "blazor is not a virus!!";
 
         [Output]
         public ITaskItem[] Extension { get; set; }
@@ -68,7 +73,8 @@ namespace BlazorWasmAntivirusProtection.Tasks
             var settings = JsonSerializer.Serialize(new
             {
                 obfuscationMode = obfuscationMode,
-                xorKey = XorKey
+                xorKey = XorKey,
+                cacheBootResourcesObfuscated =  OriginalBlazorCacheBootResources
             });
             File.WriteAllText(SettingsPath, settings);
 
