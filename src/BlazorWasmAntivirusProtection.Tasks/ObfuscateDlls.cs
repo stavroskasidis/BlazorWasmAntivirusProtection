@@ -17,11 +17,11 @@ namespace BlazorWasmAntivirusProtection.Tasks
         [Required]
         public string SettingsPath { get; set; }
 
-        public string OriginalBlazorCacheBootResources { get; set; }
+        public bool OriginalBlazorCacheBootResources { get; set; }
 
         public string ObfuscationMode { get; set; } = Tasks.ObfuscationMode.Xor.ToString();
 
-        public string XorKey { get; set; } = "antiviruses suck!";
+        public string XorKey { get; set; } = "blazor is not a virus!!";
 
         [Output]
         public ITaskItem[] Extension { get; set; }
@@ -74,7 +74,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
             {
                 obfuscationMode = obfuscationMode,
                 xorKey = XorKey,
-                cacheBootResources = OriginalBlazorCacheBootResources
+                cacheBootResourcesObfuscated =  OriginalBlazorCacheBootResources
             });
             File.WriteAllText(SettingsPath, settings);
 
