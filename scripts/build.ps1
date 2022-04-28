@@ -35,9 +35,6 @@ Write-Host "Parameters"
 Write-Host "=========="
 Write-Host "Version suffix: $VersionSuffix"
 
-Write-Message "Removing existing package from nuget cache ..."
-Remove-Item -Recurse -Force $env:USERPROFILE/.nuget/packages/BlazorWasmAntivirusProtection -ErrorAction SilentlyContinue;
-
 Write-Message "Building ..."
 dotnet build ../src/BlazorWasmAntivirusProtection.Tasks/BlazorWasmAntivirusProtection.Tasks.csproj -c Release
 dotnet build ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Release /p:VersionSuffix="$VersionSuffix"

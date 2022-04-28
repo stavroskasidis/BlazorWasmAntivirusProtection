@@ -9,6 +9,7 @@
 			$(RestoreAdditionalProjectSources);
 			$(MSBuildThisFileDirectory)../../../artifacts/nuget
 		</RestoreAdditionalProjectSources>
+		<!--<BlazorCacheBootResources>false</BlazorCacheBootResources>-->
 		
 		<!--<ObfuscationMode>Xor</ObfuscationMode>
 		<XorKey>{903148E6-E3DC-4DED-A887-0061A8028C1C}</XorKey>-->
@@ -17,7 +18,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
-		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.6.0-beta" />
+		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.7.1-beta" />
 	</ItemGroup>
 
 	<ItemGroup>
