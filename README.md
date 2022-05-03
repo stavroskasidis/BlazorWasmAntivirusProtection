@@ -23,8 +23,8 @@ This package injects some custom MSBuild tasks that do the following during publ
    * **OR**
    * Changing the MZ header of all client assemblies to BZ, a custom header (less aggressive - more info [here](https://en.wikipedia.org/wiki/DOS_MZ_executable)) .
 2. Renames the extension of all client assemblies from **.dll** to **.bin** .
-3. Swaps Blazor's default caching mechanism with a custom one that saves the obfuscated assemblies on the cache instead of the unobfuscated ones. This is because some antiviruses are flaging the cached Blazor files that are being saved on the disk by the browser.
-4. Adds a lib.module.js that contains a `beforeStart` Blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the obfuscation of the assemblies after downloaded, but before loaded by dotnet.wasm.
+3. Swaps Blazor's default caching mechanism with a custom one that saves the obfuscated assemblies to the cache instead of the unobfuscated ones. This is because some antiviruses are flaging the cached Blazor files that are being saved on the disk by the browser.
+4. Adds a `beforeStart` Blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the obfuscation of the assemblies after downloaded, but before loaded by dotnet.wasm.
 
 ## How to use
 1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using Blazor wasm hosted) projects
