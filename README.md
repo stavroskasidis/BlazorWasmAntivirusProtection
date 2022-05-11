@@ -90,7 +90,12 @@ You can see the its virus total scan result [here](https://www.virustotal.com/gu
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
-<details open="open"><summary>1.7</summary>
+<details open="open"><summary>1.8</summary>
+    
+>- Fix: There was a problem caching the boot resources when a custom `loadBootResource` method was given in `Blazor.start()`.
+</details>
+
+<details><summary>1.7</summary>
     
 >- New feature: Swaped Blazor's default caching mechanism with a custom one that saves the obfuscated assemblies on the cache instead of the unobfuscated ones. This is because some antiviruses are flaging the cached Blazor files that are being saved on the disk by the browser.
 </details>

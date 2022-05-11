@@ -14,57 +14,37 @@ export async function beforeStart(wasmOptions, extensions) {
         var existingLoadBootResouce = wasmOptions.loadBootResource;
 
         wasmOptions.loadBootResource = function (type, name, defaultUri, integrity) {
-            var existingLoaderResponse = null;
-            if (existingLoadBootResouce) {
-                existingLoaderResponse = existingLoadBootResouce(type, name, defaultUri, integrity);
-            }
             if (type == "dotnetjs") {
-                if (existingLoaderResponse) {
-                    return existingLoaderResponse;
+                if (existingLoadBootResouce) {
+                    return existingLoadBootResouce(type, name, defaultUri, integrity);
                 }
                 else {
                     return defaultUri;
                 }
             }
 
+            return getCachedResource(defaultUri, integrity).then(async cachedResponse => {
+                if (cachedResponse) {
+                    return unobfuscateResponse(cachedResponse, settings, type, name);
+                }
 
-            var fetchPromise = null;
-            if (existingLoaderResponse) {
-                if (typeof existingLoaderResponse == "string") {
-                    fetchPromise = fetchOrGetFromCache(existingLoaderResponse, integrity, settings);
+                let response = null;
+                if (existingLoadBootResouce) {
+                    let existingLoaderResponse = existingLoadBootResouce(type, name, defaultUri, integrity);
+                    if (typeof existingLoaderResponse == "string") {
+                        response = await fetchAndSaveToCache(existingLoaderResponse, integrity, settings);
+                    }
+                    else {
+                        response = await saveExternalResponseToCache(existingLoaderResponse, defaultUri, integrity);
+                    }
                 }
                 else {
-                    fetchPromise = existingLoaderResponse;
+                    response = await fetchAndSaveToCache(defaultUri, integrity, settings);
                 }
-            }
-            else {
-                fetchPromise = fetchOrGetFromCache(defaultUri, integrity, settings);
-            }
 
-            var resp = fetchPromise.then(response => {
-                return response.arrayBuffer().then(buffer => {
-                    return { buffer: buffer, headers: response.headers };
-                });
-            }).then(responseResult => {
-                var data = new Uint8Array(responseResult.buffer);
-                if (type == "assembly") {
-                    if (settings.obfuscationMode == 1) {//Changed Headers
-                        console.log("Restoring binary header: " + name);
-                        data[0] = 77; //This restores header from BZ to MZ
-                    }
-                    else if (settings.obfuscationMode == 2) { //Xored dll
-                        console.log("Restoring binary file Xor: " + name);
-                        var key = settings.xorKey;
-                        for (let i = 0; i < data.length; i++)
-                            data[i] = data[i] ^ key.charCodeAt(i % key.length); //This reverses the Xor'ing of the dll
-                    }
-                }
-                var resp = new Response(data, { "status": 200, headers: responseResult.headers });
-                return resp;
+                return unobfuscateResponse(response, settings, type, name);
+
             });
-
-
-            return resp;
 
         }
     } catch (error) {
@@ -77,6 +57,69 @@ export async function afterStarted(blazor) {
     purgeUnusedCacheEntriesAsync();
 }
 
+async function unobfuscateResponse(response, settings, type, name) {
+    var buffer = await response.arrayBuffer();
+
+    var data = new Uint8Array(buffer);
+    if (type == "assembly") {
+        if (settings.obfuscationMode == 1) {//Changed Headers
+            console.log("Restoring binary header: " + name);
+            data[0] = 77; //This restores header from BZ to MZ
+        }
+        else if (settings.obfuscationMode == 2) { //Xored dll
+            console.log("Restoring binary file Xor: " + name);
+            var key = settings.xorKey;
+            for (let i = 0; i < data.length; i++)
+                data[i] = data[i] ^ key.charCodeAt(i % key.length); //This reverses the Xor'ing of the dll
+        }
+    }
+    var newResponse = new Response(data, { "status": 200, headers: response.headers });
+    return newResponse;
+}
+
+function getCacheKey(url, contentHash) {
+    return toAbsoluteUri(`${url}.${contentHash}`);
+}
+
+async function getCachedResource(url, contentHash) {
+
+    const cacheKey = getCacheKey(url, contentHash);
+    let cachedResponse;
+    try {
+        if (cacheIfUsed) {
+            usedCacheKeys[cacheKey] = true;
+            cachedResponse = await cacheIfUsed.match(cacheKey);
+        }
+    } catch {
+        // Be tolerant to errors reading from the cache. This is a guard for https://bugs.chromium.org/p/chromium/issues/detail?id=968444 where
+        // chromium browsers may sometimes throw when working with the cache.
+    }
+
+    return cachedResponse;
+}
+
+async function saveExternalResponseToCache(fetchPromise, url, contentHash) {
+    if (cacheIfUsed) {
+        const cacheKey = getCacheKey(url, contentHash);
+        //usedCacheKeys[cacheKey] = true;
+        const networkResponse = await fetchPromise;
+        addToCacheAsync(cacheIfUsed, cacheKey, networkResponse);
+        return networkResponse;
+    }
+    else {
+        //Do nothing
+        return fetchPromise;
+    }
+}
+
+
+async function fetchAndSaveToCache(url, contentHash, settings) {
+    const response = cacheIfUsed
+        ? loadResourceWithCaching(cacheIfUsed, url, contentHash, settings)
+        : loadResourceWithoutCaching(url, contentHash, settings);
+
+    return response;
+}
 
 // DISCLAIMER:
 // ======================
@@ -93,15 +136,6 @@ function toAbsoluteUri(relativeUri) {
     return testAnchor.href;
 }
 
-
-async function fetchOrGetFromCache(url, contentHash, settings) {
-    const response = cacheIfUsed
-        ? loadResourceWithCaching(cacheIfUsed, url, contentHash, settings)
-        : loadResourceWithoutCaching(url, contentHash, settings);
-
-    return response;
-}
-
 async function loadResourceWithCaching(cache, url, contentHash, settings) {
     // Since we are going to cache the response, we require there to be a content hash for integrity
     // checking. We don't want to cache bad responses. There should always be a hash, because the build
@@ -110,29 +144,28 @@ async function loadResourceWithCaching(cache, url, contentHash, settings) {
         throw new Error('Content hash is required');
     }
 
-    const cacheKey = toAbsoluteUri(`${url}.${contentHash}`);
-    usedCacheKeys[cacheKey] = true;
+    const cacheKey = getCacheKey(url, contentHash);
+    //usedCacheKeys[cacheKey] = true;
 
-    let cachedResponse;
-    try {
-        cachedResponse = await cache.match(cacheKey);
-    } catch {
-        // Be tolerant to errors reading from the cache. This is a guard for https://bugs.chromium.org/p/chromium/issues/detail?id=968444 where
-        // chromium browsers may sometimes throw when working with the cache.
-    }
+    //let cachedResponse;
+    //try {
+    //    cachedResponse = await cache.match(cacheKey);
+    //} catch {
+    //    // Be tolerant to errors reading from the cache. This is a guard for https://bugs.chromium.org/p/chromium/issues/detail?id=968444 where
+    //    // chromium browsers may sometimes throw when working with the cache.
+    //}
 
-    if (cachedResponse) {
-        // It's in the cache.
+    //if (cachedResponse) {
+    //    // It's in the cache.
 
-        //const responseBytes = parseInt(cachedResponse.headers.get('content-length') || '0');
-        //cacheLoads[name] = { responseBytes };
-        return cachedResponse;
-    } else {
-        // It's not in the cache. Fetch from network.
-        const networkResponse = await loadResourceWithoutCaching(url, contentHash, settings);
-        addToCacheAsync(cache, cacheKey, networkResponse);
-        return networkResponse;
-    }
+    //    //const responseBytes = parseInt(cachedResponse.headers.get('content-length') || '0');
+    //    //cacheLoads[name] = { responseBytes };
+    //    return cachedResponse;
+    //} else {
+    // It's not in the cache. Fetch from network.
+    const networkResponse = await loadResourceWithoutCaching(url, contentHash, settings);
+    addToCacheAsync(cache, cacheKey, networkResponse);
+    return networkResponse;
 }
 
 async function addToCacheAsync(cache, cacheKey, response) {
