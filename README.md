@@ -28,7 +28,7 @@ This package injects some custom MSBuild tasks that do the following during publ
 4. Adds a `beforeStart` Blazor initialization method (more info [here](https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0#javascript-initializers)), that uses a custom `loadBootResource` function to restore the obfuscation of the assemblies after downloaded, but before loaded by dotnet.wasm.
 
 ## How to use
-1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using Blazor wasm hosted) projects
+1. Add the nuget package in your **Client** (wasm) **AND** your **Server** (if using Blazor wasm hosted) projects.
 ```
 dotnet add package BlazorWasmAntivirusProtection
 ``` 
@@ -43,6 +43,14 @@ const offlineAssetsInclude = [/\.bin$/, /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, 
 dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/BlazorWasmAntivirusProtection).*
+
+## Known Issues
+Disabling trimming in your project and using this package at the same time is not supported. 
+There is an issue tracking this limitation [here](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/24).
+```
+<!-- Not Supported -->
+<PublishTrimmed>false</PublishTrimmed>
+````
 
 ## Configuration
 The following options allow you to customize the tasks executed by this package.
