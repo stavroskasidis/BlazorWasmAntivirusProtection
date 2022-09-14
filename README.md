@@ -88,6 +88,10 @@ You can disable boot resources caching by using the following property in your C
 ```xml
 <BlazorCacheBootResources>false</BlazorCacheBootResources>
 ```
+## Considerations
+While using XOR obfuscation does not change the actual size of a dll file, it **does** affect its compressed size. The bigger the XOR key used, the worse the compression gets.
+
+The default XOR key is the string `bwap`.
 
 ## Samples / Demo
 You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/). 
@@ -98,7 +102,12 @@ You can see its virus total scan result [here](https://www.virustotal.com/gui/ur
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
-<details open="open"><summary>1.8</summary>
+<details open="open"><summary>1.8.5</summary>
+    
+>- Changed default Xor key to be smaller so that the resulting obfuscated dlls are more compression friendly.
+</details>
+
+<details><summary>1.8</summary>
     
 >- Fix: There was a problem caching the boot resources when a custom `loadBootResource` method was given in `Blazor.start()`.
 </details>
