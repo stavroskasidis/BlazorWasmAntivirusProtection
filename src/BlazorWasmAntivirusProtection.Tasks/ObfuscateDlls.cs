@@ -21,7 +21,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public string ObfuscationMode { get; set; } = Tasks.ObfuscationMode.Xor.ToString();
 
-        public string XorKey { get; set; } = "blazor is not a virus!!";
+        public string XorKey { get; set; } = "bwap";
 
         [Output]
         public ITaskItem[] Extension { get; set; }

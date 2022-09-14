@@ -1,0 +1,44 @@
+﻿@using System.Reflection
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@using Microsoft.AspNetCore.Components.WebAssembly.Services
+@inject LazyAssemblyLoader AssemblyLoader
+@inject IWebAssemblyHostEnvironment Environment
+@inject ILogger<App> Logger
+
+<Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="@OnNavigateAsync" AdditionalAssemblies="@lazyLoadedAssemblies">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+
+@code {
+    private List<Assembly> lazyLoadedAssemblies = new();
+    private string binaryExtension => Environment.IsProduction() ? "bin" : "dll";
+
+    private async Task OnNavigateAsync(NavigationContext args)
+    {
+        try
+        {
+            if (args.Path == "counter" && !lazyLoadedAssemblies.Any(x => x.GetName().Name == "BlazorHostedSampleLazyLoading.Counter"))
+            {
+                var assemblies = await AssemblyLoader.LoadAssembliesAsync(new[] 
+                    { 
+                        $"BlazorHostedSampleLazyLoading.Counter.{binaryExtension}" 
+                    });
+                lazyLoadedAssemblies.AddRange(assemblies);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError("Error: {Message}", ex.Message);
+        }
+    }
+}
