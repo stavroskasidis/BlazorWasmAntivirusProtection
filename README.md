@@ -44,6 +44,11 @@ dotnet publish Server\BlazorHostedSampleApp.Server.csproj -c Release
 ```
 *Nuget package page can be found [here](https://www.nuget.org/packages/BlazorWasmAntivirusProtection).*
 
+## Considerations
+While using XOR obfuscation does not change the actual size of a dll file, it **does** affect its compressed size. The bigger the XOR key used, the worse the compression gets.
+
+The default XOR key is the string `bwap`.
+
 ## Known Issues
 Disabling trimming in your project and using this package at the same time is not supported. 
 There is an issue tracking this limitation [here](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/24).
@@ -88,15 +93,11 @@ You can disable boot resources caching by using the following property in your C
 ```xml
 <BlazorCacheBootResources>false</BlazorCacheBootResources>
 ```
-## Considerations
-While using XOR obfuscation does not change the actual size of a dll file, it **does** affect its compressed size. The bigger the XOR key used, the worse the compression gets.
-
-The default XOR key is the string `bwap`.
 
 ## Samples / Demo
 You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/). 
 
-You can see its virus total scan result [here](https://www.virustotal.com/gui/url/172a7a7059b2f0e0980187fac4921d3df0d5a66a07b5a60e40e23668067b0368).
+You can see its [virustotal.com](https://www.virustotal.com/) scan result [here](https://www.virustotal.com/gui/url/172a7a7059b2f0e0980187fac4921d3df0d5a66a07b5a60e40e23668067b0368).
 
 ## Special Thanks
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
