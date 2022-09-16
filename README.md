@@ -94,6 +94,12 @@ You can disable boot resources caching by using the following property in your C
 <BlazorCacheBootResources>false</BlazorCacheBootResources>
 ```
 
+### **Disable info console logs**
+You can disable info console logs by adding the following property in the **published** project's .csproj file (**Server** project if using Blazor hosted).
+```xml
+<DisableConsoleLogs>true</DisableConsoleLogs>
+```
+
 ## Samples / Demo
 You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/). 
 

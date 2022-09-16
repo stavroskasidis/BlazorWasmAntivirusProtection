@@ -23,6 +23,8 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public string XorKey { get; set; } = "bwap";
 
+        public bool DisableConsoleLog { get; set; }
+
         [Output]
         public ITaskItem[] Extension { get; set; }
 
@@ -74,7 +76,8 @@ namespace BlazorWasmAntivirusProtection.Tasks
             {
                 obfuscationMode = obfuscationMode,
                 xorKey = XorKey,
-                cacheBootResourcesObfuscated =  OriginalBlazorCacheBootResources
+                cacheBootResourcesObfuscated =  OriginalBlazorCacheBootResources,
+                disableConsoleLog = DisableConsoleLog
             });
             File.WriteAllText(SettingsPath, settings);
 

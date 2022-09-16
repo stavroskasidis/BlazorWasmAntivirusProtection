@@ -63,11 +63,17 @@ async function unobfuscateResponse(response, settings, type, name) {
     var data = new Uint8Array(buffer);
     if (type == "assembly") {
         if (settings.obfuscationMode == 1) {//Changed Headers
-            console.log("Restoring binary header: " + name);
+            if (!settings.disableConsoleLogs)
+            {
+                console.log("Restoring binary header: " + name);
+            }
             data[0] = 77; //This restores header from BZ to MZ
         }
         else if (settings.obfuscationMode == 2) { //Xored dll
-            console.log("Restoring binary file Xor: " + name);
+            if (!settings.disableConsoleLogs)
+            {
+                console.log("Restoring binary file Xor: " + name);
+            }
             var key = settings.xorKey;
             for (let i = 0; i < data.length; i++)
                 data[i] = data[i] ^ key.charCodeAt(i % key.length); //This reverses the Xor'ing of the dll

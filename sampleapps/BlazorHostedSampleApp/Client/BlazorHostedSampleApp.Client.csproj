@@ -10,6 +10,7 @@
 			$(MSBuildThisFileDirectory)../../../artifacts/nuget
 		</RestoreAdditionalProjectSources>
 		<!--<BlazorCacheBootResources>false</BlazorCacheBootResources>-->
+		<!--<DisableConsoleLogs>true</DisableConsoleLogs>-->
 		
 		<!--<ObfuscationMode>Xor</ObfuscationMode>
 		<XorKey>{903148E6-E3DC-4DED-A887-0061A8028C1C}</XorKey>-->
