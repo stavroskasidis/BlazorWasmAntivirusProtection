@@ -19,6 +19,8 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public string RenameDllsTo { get; set; } = "bin";
         public bool DisableRenamingDlls { get; set; }
+        public bool BlazorEnableCompression { get; set; } = true;
+        public string CompressionLevel { get; set; }
 
         public override bool Execute()
         {
@@ -75,21 +77,54 @@ namespace BlazorWasmAntivirusProtection.Tasks
                     File.WriteAllText(serviceWorkerPathAssets, serviceWorkerAssets);
                 }
 
-                if (File.Exists(bootJsonGzPath))
+                if (File.Exists(bootJsonGzPath) && BlazorEnableCompression)
                 {
-                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonGzPath}\"");
-                    File.Delete(bootJsonGzPath);
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{bootJsonGzPath}\"");
+                    GZipCompress(bootJsonPath, bootJsonGzPath);
                 }
-                if (File.Exists(bootJsonBrPath))
+                if (File.Exists(bootJsonBrPath) && BlazorEnableCompression)
                 {
-                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Deleting \"{bootJsonBrPath}\"");
-                    File.Delete(bootJsonBrPath);
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{bootJsonBrPath}\"");
+                    BrotliCompress(bootJsonPath, bootJsonBrPath);
                 }
             }
             
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo} finished");
 
             return true;
+        }
+
+        private void GZipCompress(string bootJsonPath, string bootJsonGzPath)
+        {
+            try
+            {
+                File.Delete(bootJsonGzPath);
+                using var fileStream = File.OpenRead(bootJsonPath);
+                using var stream = File.Create(bootJsonGzPath);
+                using var destination = new GZipStream(stream, System.IO.Compression.CompressionLevel.Optimal);
+                fileStream.CopyTo(destination);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorFromException(ex);
+            }
+        }
+
+        private void BrotliCompress(string bootJsonPath, string bootJsonBrPath)
+        {
+            try
+            {
+                File.Delete(bootJsonBrPath);
+                var compressionLevel = Enum.TryParse<CompressionLevel>(CompressionLevel, out var level) ? level : System.IO.Compression.CompressionLevel.Optimal;
+                using var fileStream = File.OpenRead(bootJsonPath);
+                using var stream = File.Create(bootJsonBrPath);
+                using var destination = new BrotliStream(stream, compressionLevel);
+                fileStream.CopyTo(destination);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorFromException(ex);
+            }
         }
 
         string ComputeSha256Hash(string rawData)
