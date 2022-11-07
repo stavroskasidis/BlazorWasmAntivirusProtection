@@ -10,6 +10,7 @@ trigger:
   paths:
     include:
     - sampleapps
+  batch: true
 
 pool:
   vmImage: ubuntu-latest
