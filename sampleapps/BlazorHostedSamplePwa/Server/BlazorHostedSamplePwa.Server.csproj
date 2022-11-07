@@ -12,7 +12,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.2" />
-		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.8.0-beta" />
+		<PackageReference Include="BlazorWasmAntivirusProtection" Version="1.9.0-beta" />
 	</ItemGroup>
 
 	<ItemGroup>
