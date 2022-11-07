@@ -102,7 +102,12 @@ You can see its virus total scan result [here](https://www.virustotal.com/gui/ur
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
-<details open="open"><summary>1.8.5</summary>
+<details open="open"><summary>1.9.0</summary>
+    
+>- Changed "blazor.boot.json.gz" and "blazor.boot.json.br" to be recompressed instead of deleted. (Contribution by [jsakamoto](https://github.com/jsakamoto))
+</details>
+
+<details><summary>1.8.5</summary>
     
 >- Changed default Xor key to be smaller so that the resulting obfuscated dlls are more compression friendly.
 </details>
