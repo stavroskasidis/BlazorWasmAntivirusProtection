@@ -33,7 +33,7 @@
 
 	<!-- Runs in the published project (server if hosted)-->
 	<Target Name="_ChangeDLLFileExtensions" AfterTargets="Publish">
-		<RenameDlls PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)"></RenameDlls>
+		<RenameDlls PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)" BlazorEnableCompression="$(BlazorEnableCompression)" CompressionLevel="$(_BlazorBrotliCompressionLevel)"></RenameDlls>
 	</Target>
 
 </Project>
