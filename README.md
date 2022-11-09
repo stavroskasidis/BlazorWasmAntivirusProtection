@@ -103,7 +103,14 @@ You can see its [virustotal.com](https://www.virustotal.com/) scan result [here]
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
-<details open="open"><summary>1.9.0</summary>
+
+<details open="open"><summary>2.0.0</summary>
+    
+>- Upgraded to .net 7.0
+</details>
+
+
+<details><summary>1.9.0</summary>
     
 >- Changed "blazor.boot.json.gz" and "blazor.boot.json.br" to be recompressed instead of deleted. (Contribution by [jsakamoto](https://github.com/jsakamoto))
 </details>
