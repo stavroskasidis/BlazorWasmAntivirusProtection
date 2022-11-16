@@ -104,7 +104,13 @@ This work was inspired by the post in https://github.com/dotnet/aspnetcore/issue
 
 ## Release Notes
 
-<details open="open"><summary>2.0.0</summary>
+<details open="open"><summary>2.1.0</summary>
+    
+>- Fix targeting .net 7.0 correctly
+>- Changed default Xor key to be a bit more complex.
+</details>
+
+<details><summary>2.0.0</summary>
     
 >- Upgraded to .net 7.0
 </details>
