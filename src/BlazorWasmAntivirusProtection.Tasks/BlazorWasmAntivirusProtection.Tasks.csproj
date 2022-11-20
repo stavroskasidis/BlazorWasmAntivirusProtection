@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>8.0</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Brotli.NET" Version="2.1.1" />
         <PackageReference Include="Microsoft.Build.Framework" Version="16.10.0" />
         <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.10.0" />
         <PackageReference Include="System.Text.Json" Version="7.0.0" />
