@@ -1,5 +1,6 @@
 namespace BlazorWasmAntivirusProtection.Tasks
 {
+    using Brotli;
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
     using System;
@@ -118,8 +119,12 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 var compressionLevel = Enum.TryParse<CompressionLevel>(CompressionLevel, out var level) ? level : System.IO.Compression.CompressionLevel.Optimal;
                 using var fileStream = File.OpenRead(bootJsonPath);
                 using var stream = File.Create(bootJsonBrPath);
-                using var destination = new BrotliStream(stream, compressionLevel);
-                fileStream.CopyTo(destination);
+                fileStream.CompressToBrotli(stream, compressionLevel switch
+                {
+                    System.IO.Compression.CompressionLevel.Optimal => 11,
+                    System.IO.Compression.CompressionLevel.Fastest => 5,
+                    System.IO.Compression.CompressionLevel.NoCompression=> 0,
+                });
             }
             catch (Exception ex)
             {

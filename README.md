@@ -104,7 +104,12 @@ This work was inspired by the post in https://github.com/dotnet/aspnetcore/issue
 
 ## Release Notes
 
-<details open="open"><summary>2.1.0</summary>
+<details open="open"><summary>2.2.0</summary>
+    
+>- Fix when publishing from Visual Studio [#36](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/36)
+</details>
+
+<details><summary>2.1.0</summary>
     
 >- Fix targeting .net 7.0 correctly
 >- Changed default Xor key to be a bit more complex.
