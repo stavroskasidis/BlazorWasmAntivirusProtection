@@ -30,5 +30,15 @@
         </ItemGroup>
     </Target>
 
+  <Target Name="GetToolsOutputDlls" BeforeTargets="CoreCompile">
+    <MSBuild Projects="..\BlazorWasmAntivirusProtection.BrotliCompress\BlazorWasmAntivirusProtection.BrotliCompress.csproj" Targets="Publish;PublishItemsOutputGroup" Properties="Configuration=$(Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_ToolsProjectOutputs" />
+    </MSBuild>
+    <ItemGroup>
+      <Content Include="@(_ToolsProjectOutputs)" Condition="('$(Configuration)' == 'Release' And '%(_ToolsProjectOutputs.Extension)' == '.dll')
+					                                            Or ('$(Configuration)' == 'Debug' And ('%(_ToolsProjectOutputs.Extension)' == '.dll' Or '%(_ToolsProjectOutputs.Extension)' == '.pdb'))
+                                                      Or ('%(_ToolsProjectOutputs.Extension)' == '.json')" Pack="true" PackagePath="tools\%(_ToolsProjectOutputs.TargetPath)" KeepMetadata="Pack;PackagePath" />
+    </ItemGroup>
+  </Target>
 
 </Project>

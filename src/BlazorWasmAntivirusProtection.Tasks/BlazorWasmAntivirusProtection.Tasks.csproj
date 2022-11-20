@@ -1,7 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <!--
+        IMPORTANT: MSBuild Custom Task must target .NET Standard 2.0.
+                   Because an MSBuild Custom Task will run on both .NET (.NET Core) and .NET Framework.
+                   When users build a project with Visual Studio on Windows, the build process will be run on .NET Framework 4.x, 
+                   and when users build a project with .NET CLI (dotnet command), the build process will be run on .NET (.NET Core).
+        -->
+        <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>8.0</LangVersion>
     </PropertyGroup>
 

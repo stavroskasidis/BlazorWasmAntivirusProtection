@@ -17,6 +17,9 @@ namespace BlazorWasmAntivirusProtection.Tasks
         [Required]
         public string PublishDir { get; set; }
 
+        [Required]
+        public string BrotliCompressToolPath { get; set; }
+
         public string RenameDllsTo { get; set; } = "bin";
         public bool DisableRenamingDlls { get; set; }
         public bool BlazorEnableCompression { get; set; } = true;
@@ -114,12 +117,19 @@ namespace BlazorWasmAntivirusProtection.Tasks
         {
             try
             {
-                File.Delete(bootJsonBrPath);
-                var compressionLevel = Enum.TryParse<CompressionLevel>(CompressionLevel, out var level) ? level : System.IO.Compression.CompressionLevel.Optimal;
-                using var fileStream = File.OpenRead(bootJsonPath);
-                using var stream = File.Create(bootJsonBrPath);
-                using var destination = new BrotliStream(stream, compressionLevel);
-                fileStream.CopyTo(destination);
+                // NOTE: This MSBuild Custom Task will run not only on .NET 6 or later but also on .NET Framework 4.x.
+                //       Therefore the `BrotliStream` class is not usable in this MSBuild Custom Task due to
+                //       the `BrotliStream` class is not provided on.NET Framework.Instead, we can do that
+                //       with execution as an out process.
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = "dotnet",
+                    Arguments = $"exec \"{BrotliCompressToolPath}\" \"{bootJsonPath}\" \"{bootJsonBrPath}\" \"{CompressionLevel}\""
+                };
+                Log.LogMessage(MessageImportance.Low, $"{startInfo.FileName} {startInfo.Arguments}");
+                var process = Process.Start(startInfo);
+                process.WaitForExit();
+                if (process.ExitCode != 0) throw new Exception($"The exit code of recompressing with Brotli command was not 0. (it was {process.ExitCode})");
             }
             catch (Exception ex)
             {

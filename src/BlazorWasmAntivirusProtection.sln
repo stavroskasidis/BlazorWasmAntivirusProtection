@@ -36,15 +36,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{298E
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHostedSampleLazyLoading.Server", "..\sampleapps\BlazorHostedSampleLazyLoading\Server\BlazorHostedSampleLazyLoading.Server.csproj", "{9E4C4D90-0E4C-4679-AD28-7F990B286344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSampleLazyLoading.Server", "..\sampleapps\BlazorHostedSampleLazyLoading\Server\BlazorHostedSampleLazyLoading.Server.csproj", "{9E4C4D90-0E4C-4679-AD28-7F990B286344}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHostedSampleLazyLoading.Client", "..\sampleapps\BlazorHostedSampleLazyLoading\Client\BlazorHostedSampleLazyLoading.Client.csproj", "{ABC6E5FE-4B5E-42AC-A955-35754B2805A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSampleLazyLoading.Client", "..\sampleapps\BlazorHostedSampleLazyLoading\Client\BlazorHostedSampleLazyLoading.Client.csproj", "{ABC6E5FE-4B5E-42AC-A955-35754B2805A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHostedSampleLazyLoading.Shared", "..\sampleapps\BlazorHostedSampleLazyLoading\Shared\BlazorHostedSampleLazyLoading.Shared.csproj", "{4C7F227E-2E90-4D0B-960D-0247DA937117}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSampleLazyLoading.Shared", "..\sampleapps\BlazorHostedSampleLazyLoading\Shared\BlazorHostedSampleLazyLoading.Shared.csproj", "{4C7F227E-2E90-4D0B-960D-0247DA937117}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorHostedSampleLazyLoading", "BlazorHostedSampleLazyLoading", "{B8531AC8-E394-4875-AB1F-3167F4C7149C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorHostedSampleLazyLoading.Counter", "..\sampleapps\BlazorHostedSampleLazyLoading\BlazorHostedSampleLazyLoading.Counter\BlazorHostedSampleLazyLoading.Counter.csproj", "{D1EC6118-9D76-42C1-9F4B-E9819AEC6472}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSampleLazyLoading.Counter", "..\sampleapps\BlazorHostedSampleLazyLoading\BlazorHostedSampleLazyLoading.Counter\BlazorHostedSampleLazyLoading.Counter.csproj", "{D1EC6118-9D76-42C1-9F4B-E9819AEC6472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWasmAntivirusProtection.BrotliCompress", "BlazorWasmAntivirusProtection.BrotliCompress\BlazorWasmAntivirusProtection.BrotliCompress.csproj", "{9DE33910-2E2E-484D-A9F6-686A362F78FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{D1EC6118-9D76-42C1-9F4B-E9819AEC6472}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1EC6118-9D76-42C1-9F4B-E9819AEC6472}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1EC6118-9D76-42C1-9F4B-E9819AEC6472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE33910-2E2E-484D-A9F6-686A362F78FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE33910-2E2E-484D-A9F6-686A362F78FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE33910-2E2E-484D-A9F6-686A362F78FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE33910-2E2E-484D-A9F6-686A362F78FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
