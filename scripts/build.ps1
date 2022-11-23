@@ -37,6 +37,7 @@ Write-Host "Version suffix: $VersionSuffix"
 
 Write-Message "Building ..."
 dotnet build ../src/BlazorWasmAntivirusProtection.Tasks/BlazorWasmAntivirusProtection.Tasks.csproj -c Release
+dotnet build ../src/BlazorWasmAntivirusProtection.BrotliCompress/BlazorWasmAntivirusProtection.BrotliCompress.csproj -c Release
 dotnet build ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Release /p:VersionSuffix="$VersionSuffix"
 Confirm-PreviousCommand
 
