@@ -21,7 +21,7 @@
 		<PackageReference Include="BlazorWasmAntivirusProtection" Version="2.2.1-test" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup>		
 		<ProjectReference Include="..\Shared\BlazorHostedSampleApp.Shared.csproj" />
 	</ItemGroup>
 

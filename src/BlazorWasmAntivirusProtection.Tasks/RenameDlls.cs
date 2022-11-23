@@ -81,12 +81,18 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 if (File.Exists(bootJsonGzPath) && BlazorEnableCompression)
                 {
                     Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{bootJsonGzPath}\"");
-                    GZipCompress(bootJsonPath, bootJsonGzPath);
+                    if(!GZipCompress(bootJsonPath, bootJsonGzPath))
+                    {
+                        return false;
+                    }
                 }
                 if (File.Exists(bootJsonBrPath) && BlazorEnableCompression)
                 {
                     Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{bootJsonBrPath}\"");
-                    BrotliCompress(bootJsonPath, bootJsonBrPath);
+                    if(!BrotliCompress(bootJsonPath, bootJsonBrPath))
+                    {
+                        return false;
+                    }
                 }
             }
             
@@ -95,7 +101,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
             return true;
         }
 
-        private void GZipCompress(string bootJsonPath, string bootJsonGzPath)
+        private bool GZipCompress(string bootJsonPath, string bootJsonGzPath)
         {
             try
             {
@@ -107,11 +113,17 @@ namespace BlazorWasmAntivirusProtection.Tasks
             }
             catch (Exception ex)
             {
-                Log.LogErrorFromException(ex);
+                if (File.Exists(bootJsonGzPath))
+                {
+                    File.Delete(bootJsonGzPath);
+                }
+                Log.LogErrorFromException(ex, true, true, null);
+                return false;
             }
+            return true;
         }
 
-        private void BrotliCompress(string bootJsonPath, string bootJsonBrPath)
+        private bool BrotliCompress(string bootJsonPath, string bootJsonBrPath)
         {
             try
             {
@@ -128,8 +140,14 @@ namespace BlazorWasmAntivirusProtection.Tasks
             }
             catch (Exception ex)
             {
-                Log.LogErrorFromException(ex);
+                if (File.Exists(bootJsonBrPath))
+                {
+                    File.Delete(bootJsonBrPath);
+                }
+                Log.LogErrorFromException(ex, true, true, null);
+                return false;
             }
+            return true;
         }
 
         string ComputeSha256Hash(string rawData)
