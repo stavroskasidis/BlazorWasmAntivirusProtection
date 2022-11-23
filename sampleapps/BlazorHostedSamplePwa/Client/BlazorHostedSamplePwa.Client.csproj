@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RestoreAdditionalProjectSources>
@@ -12,9 +11,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
-		<PackageReference Include="BlazorWasmAntivirusProtection" Version="2.2.1-test" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="$(MicrosoftPackagesVersion)" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="$(MicrosoftPackagesVersion)" PrivateAssets="all" />
+		<PackageReference Include="BlazorWasmAntivirusProtection" Version="$(BlazorWasmAntivirusProtectionVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>

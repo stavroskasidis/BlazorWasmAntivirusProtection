@@ -1,0 +1,8 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <MicrosoftPackagesVersion>7.0.*</MicrosoftPackagesVersion>
+        <BlazorWasmAntivirusProtectionVersion>2.3.0-test</BlazorWasmAntivirusProtectionVersion>
+
+    </PropertyGroup>
+</Project>
