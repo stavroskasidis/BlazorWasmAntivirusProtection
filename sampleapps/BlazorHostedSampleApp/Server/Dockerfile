@@ -16,6 +16,7 @@ WORKDIR "/src/Server"
 RUN dotnet build "BlazorHostedSampleApp.Server.csproj" -c Release -o /app/build
 
 FROM build AS publish
+RUN apt-get update && apt-get install -y libc6-dev
 RUN dotnet publish "BlazorHostedSampleApp.Server.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final

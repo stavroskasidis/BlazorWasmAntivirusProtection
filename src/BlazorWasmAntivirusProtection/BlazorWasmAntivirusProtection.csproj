@@ -11,7 +11,7 @@
 		<PackageProjectUrl>https://github.com/stavroskasidis/BlazorWasmAntivirusProtection</PackageProjectUrl>
 		<Description>This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware</Description>
 		<VersionSuffix>$(VersionSuffix)</VersionSuffix>
-		<Version>2.2.2</Version>
+		<Version>2.3.0</Version>
 		<Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     </PropertyGroup>
 
@@ -30,6 +30,20 @@
 					 Pack="true" PackagePath="tasks\%(_TasksProjectOutputs.TargetPath)" KeepMetadata="Pack;PackagePath" />
         </ItemGroup>
     </Target>
+
+	<Target Name="GetToolsOutputDlls" BeforeTargets="CoreCompile">
+		<MSBuild Projects="..\BlazorWasmAntivirusProtection.BrotliCompress\BlazorWasmAntivirusProtection.BrotliCompress.csproj" Targets="Publish;PublishItemsOutputGroup" Properties="Configuration=$(Configuration)">
+			<Output TaskParameter="TargetOutputs" ItemName="_ToolsProjectOutputs" />
+		</MSBuild>
+		<ItemGroup>
+			<Content Include="@(_ToolsProjectOutputs)" Condition="('$(Configuration)' == 'Release' And '%(_ToolsProjectOutputs.Extension)' == '.dll')
+					                                            Or ('$(Configuration)' == 'Debug' And ('%(_ToolsProjectOutputs.Extension)' == '.dll' Or '%(_ToolsProjectOutputs.Extension)' == '.pdb'))
+                                                      Or ('%(_ToolsProjectOutputs.Extension)' == '.json')"
+					 Pack="true" 
+					 PackagePath="tools\%(_ToolsProjectOutputs.TargetPath)" 
+					 KeepMetadata="Pack;PackagePath" />
+		</ItemGroup>
+	</Target>
 
 
 </Project>

@@ -6,7 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Brotli.NET" Version="2.1.1" />
         <PackageReference Include="Microsoft.Build.Framework" Version="16.10.0" />
         <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.10.0" />
         <PackageReference Include="System.Text.Json" Version="7.0.0" />
