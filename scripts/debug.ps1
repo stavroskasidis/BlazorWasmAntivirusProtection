@@ -37,6 +37,7 @@ Get-Process "dotnet" | Stop-Process
 
 Write-Message "Building ..."
 dotnet build ../src/BlazorWasmAntivirusProtection.Tasks/BlazorWasmAntivirusProtection.Tasks.csproj -c Debug
+dotnet build ../src/BlazorWasmAntivirusProtection.BrotliCompress/BlazorWasmAntivirusProtection.BrotliCompress.csproj -c Release
 dotnet build ../src/BlazorWasmAntivirusProtection/BlazorWasmAntivirusProtection.csproj -c Debug /p:VersionSuffix="test"
 Confirm-PreviousCommand
 

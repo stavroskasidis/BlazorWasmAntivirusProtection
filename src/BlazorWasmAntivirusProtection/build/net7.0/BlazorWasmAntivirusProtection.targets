@@ -8,6 +8,7 @@
 
 	<PropertyGroup>
 		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ObfuscateDlls</ComputeBlazorExtensionsDependsOn>
+		<_BlazorWAPBrotliCompressDll>$(MSBuildThisFileDirectory)..\..\tools\BlazorWasmAntivirusProtection.BrotliCompress.dll</_BlazorWAPBrotliCompressDll>
 	</PropertyGroup>
 	
 	<!-- Runs in the client project -->
@@ -33,7 +34,10 @@
 
 	<!-- Runs in the published project (server if hosted)-->
 	<Target Name="_ChangeDLLFileExtensions" AfterTargets="Publish">
-		<RenameDlls PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)" BlazorEnableCompression="$(BlazorEnableCompression)" CompressionLevel="$(_BlazorBrotliCompressionLevel)"></RenameDlls>
+		<RenameDlls PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)" 
+					BlazorEnableCompression="$(BlazorEnableCompression)" CompressionLevel="$(_BlazorBrotliCompressionLevel)"
+					BrotliCompressToolPath="$(_BlazorWAPBrotliCompressDll)">
+		</RenameDlls>
 	</Target>
 
 </Project>

@@ -1,20 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RestoreAdditionalProjectSources>
 			$(RestoreAdditionalProjectSources);
 			$(MSBuildThisFileDirectory)../../../artifacts/nuget
 		</RestoreAdditionalProjectSources>
+		<UserSecretsId>ab18ecad-eb5a-4dc2-bcd9-12a62054d7f0</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<!--<DisableRenamingDlls>true</DisableRenamingDlls>-->
 		<!--<RenameDllsTo>blazor</RenameDllsTo>-->
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.0" />
-		<PackageReference Include="BlazorWasmAntivirusProtection" Version="2.2.1-test" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="$(MicrosoftPackagesVersion)" />
+		<PackageReference Include="BlazorWasmAntivirusProtection" Version="$(BlazorWasmAntivirusProtectionVersion)" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 	</ItemGroup>
 
 	<ItemGroup>
