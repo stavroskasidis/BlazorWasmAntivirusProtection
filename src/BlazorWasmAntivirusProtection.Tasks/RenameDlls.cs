@@ -66,7 +66,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                     serviceWorkerAssets = serviceWorkerAssets.Replace(".dll", $".{RenameDllsTo}");
                     var assetsManifest = JsonSerializer.Deserialize<AssetsManifest>(serviceWorkerAssets.Replace("self.assetsManifest = ", "").Trim().TrimEnd(';'));
                     var bootJsonAssetEntry = assetsManifest.assets.First(x => x.url.EndsWith("blazor.boot.json"));
-                    bootJsonAssetEntry.hash = $"sha256-{ComputeSha256Hash(bootJson)}";
+                    bootJsonAssetEntry.hash = $"sha256-{Tools.ComputeSha256Hash(bootJson)}";
                     //var bootJsonModel = JsonSerializer.Deserialize<BlazorBoot>(bootJson);
                     //foreach(var assembly in bootJsonModel.resources.assembly)
                     //{
@@ -82,7 +82,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 if (File.Exists(bootJsonGzPath) && BlazorEnableCompression)
                 {
                     Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{bootJsonGzPath}\"");
-                    if(!GZipCompress(bootJsonPath, bootJsonGzPath))
+                    if(!Tools.GZipCompress(bootJsonPath, bootJsonGzPath,Log))
                     {
                         return false;
                     }
@@ -90,7 +90,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 if (File.Exists(bootJsonBrPath) && BlazorEnableCompression)
                 {
                     Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{bootJsonBrPath}\"");
-                    if(!BrotliCompress(bootJsonPath, bootJsonBrPath))
+                    if(!Tools.BrotliCompress(bootJsonPath, bootJsonBrPath, BrotliCompressToolPath, CompressionLevel, Log))
                     {
                         return false;
                     }
@@ -100,66 +100,6 @@ namespace BlazorWasmAntivirusProtection.Tasks
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Renaming .dll files to .{RenameDllsTo} finished");
 
             return true;
-        }
-
-        private bool GZipCompress(string bootJsonPath, string bootJsonGzPath)
-        {
-            try
-            {
-                File.Delete(bootJsonGzPath);
-                using var fileStream = File.OpenRead(bootJsonPath);
-                using var stream = File.Create(bootJsonGzPath);
-                using var destination = new GZipStream(stream, System.IO.Compression.CompressionLevel.Optimal);
-                fileStream.CopyTo(destination);
-            }
-            catch (Exception ex)
-            {
-                if (File.Exists(bootJsonGzPath))
-                {
-                    File.Delete(bootJsonGzPath);
-                }
-                Log.LogErrorFromException(ex, true, true, null);
-                return false;
-            }
-            return true;
-        }
-
-        private bool BrotliCompress(string bootJsonPath, string bootJsonBrPath)
-        {
-            try
-            {
-                // NOTE: This MSBuild Custom Task will run not only on .NET 6 or later but also on .NET Framework 4.x.
-                //       Therefore the `BrotliStream` class is not usable in this MSBuild Custom Task due to
-                //       the `BrotliStream` class is not provided on.NET Framework.Instead, we can do that
-                //       with execution as an out process.
-                var startInfo = new ProcessStartInfo
-                {
-                    FileName = "dotnet",
-                    Arguments = $"exec \"{BrotliCompressToolPath}\" \"{bootJsonPath}\" \"{bootJsonBrPath}\" \"{CompressionLevel}\""
-                };
-                Log.LogMessage(MessageImportance.Low, $"{startInfo.FileName} {startInfo.Arguments}");
-                var process = Process.Start(startInfo);
-                process.WaitForExit();
-                if (process.ExitCode != 0) 
-                    throw new Exception($"The exit code of recompressing with Brotli command was not 0. (it was {process.ExitCode})");
-            }
-            catch (Exception ex)
-            {
-                if (File.Exists(bootJsonBrPath))
-                {
-                    File.Delete(bootJsonBrPath);
-                }
-                Log.LogErrorFromException(ex, true, true, null);
-                return false;
-            }
-            return true;
-        }
-
-        string ComputeSha256Hash(string rawData)
-        {
-            using var sha256Hash = SHA256.Create();
-            byte[] hash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-            return Convert.ToBase64String(hash);
         }
     }
 }

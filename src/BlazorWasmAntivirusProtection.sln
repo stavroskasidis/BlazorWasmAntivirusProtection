@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmAntivirusProtection.Tasks", "BlazorWasmAntivirusProtection.Tasks\BlazorWasmAntivirusProtection.Tasks.csproj", "{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApps", "SampleApps", "{B6087F3A-2586-4098-BD69-449619BEA560}"
+	ProjectSection(SolutionItems) = preProject
+		..\sampleapps\Directory.Build.props = ..\sampleapps\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorHostedSampleApp", "BlazorHostedSampleApp", "{B0BE31C9-49A3-4DD5-9A92-218F35C2AF35}"
 EndProject
