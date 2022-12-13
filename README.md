@@ -104,7 +104,13 @@ This work was inspired by the post in https://github.com/dotnet/aspnetcore/issue
 
 ## Release Notes
 
-<details open="open"><summary>2.3.0</summary>
+<details open="open"><summary>2.4.0</summary>
+    
+>- Fix for gzip satellite assemblies being compressed from original verion instead of obfuscated one.
+>- Changed target back to .net 6.0.
+</details>
+
+<details><summary>2.3.0</summary>
     
 >- Removed Brotli.NET that depends on native libs and added BrotliCompress tool that uses .net native brotli compression.
   Fixes [#36](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/36), [#42](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/42)

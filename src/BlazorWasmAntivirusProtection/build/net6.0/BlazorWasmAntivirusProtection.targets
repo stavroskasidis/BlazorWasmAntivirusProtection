@@ -5,6 +5,8 @@
             AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.CleanOldDlls"
 		AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
+	<UsingTask TaskName="BlazorWasmAntivirusProtection.Tasks.RecompressSatelliteAssemblies"
+		AssemblyFile="$(MSBuildThisProjectFileDirectory)..\..\tasks\BlazorWasmAntivirusProtection.Tasks.dll" />
 
 	<PropertyGroup>
 		<ComputeBlazorExtensionsDependsOn>$(ComputeBlazorExtensionsDependsOn);_ObfuscateDlls</ComputeBlazorExtensionsDependsOn>
@@ -38,6 +40,10 @@
 					BlazorEnableCompression="$(BlazorEnableCompression)" CompressionLevel="$(_BlazorBrotliCompressionLevel)"
 					BrotliCompressToolPath="$(_BlazorWAPBrotliCompressDll)">
 		</RenameDlls>
+		<RecompressSatelliteAssemblies PublishDir="$(PublishDir)" RenameDllsTo="$(RenameDllsTo)" DisableRenamingDlls="$(DisableRenamingDlls)"
+									   BrotliCompressToolPath="$(_BlazorWAPBrotliCompressDll)" 
+									   CompressionLevel="$(_BlazorBrotliCompressionLevel)">
+		</RecompressSatelliteAssemblies>
 	</Target>
 
 </Project>

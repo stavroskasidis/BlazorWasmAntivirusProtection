@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmAntivirusProtection.Tasks", "BlazorWasmAntivirusProtection.Tasks\BlazorWasmAntivirusProtection.Tasks.csproj", "{9B4ECABA-1FF3-4B4A-9223-DBBE1D1B1745}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleApps", "SampleApps", "{B6087F3A-2586-4098-BD69-449619BEA560}"
+	ProjectSection(SolutionItems) = preProject
+		..\sampleapps\Directory.Build.props = ..\sampleapps\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorHostedSampleApp", "BlazorHostedSampleApp", "{B0BE31C9-49A3-4DD5-9A92-218F35C2AF35}"
 EndProject
@@ -47,6 +50,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorHostedSampleLazyLoading.Counter", "..\sampleapps\BlazorHostedSampleLazyLoading\BlazorHostedSampleLazyLoading.Counter\BlazorHostedSampleLazyLoading.Counter.csproj", "{D1EC6118-9D76-42C1-9F4B-E9819AEC6472}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWasmAntivirusProtection.BrotliCompress", "BlazorWasmAntivirusProtection.BrotliCompress\BlazorWasmAntivirusProtection.BrotliCompress.csproj", "{DF24E023-EE53-4C3A-B0A2-927CCD39F2AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleAppsShared.Localization", "..\sampleapps\SampleAppsShared.Localization\SampleAppsShared.Localization.csproj", "{4722CCB1-8E90-4DBB-95EA-F7927E254BAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{775A9613-79F0-4FE9-B61D-718C352544B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +113,10 @@ Global
 		{DF24E023-EE53-4C3A-B0A2-927CCD39F2AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF24E023-EE53-4C3A-B0A2-927CCD39F2AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF24E023-EE53-4C3A-B0A2-927CCD39F2AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4722CCB1-8E90-4DBB-95EA-F7927E254BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4722CCB1-8E90-4DBB-95EA-F7927E254BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4722CCB1-8E90-4DBB-95EA-F7927E254BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4722CCB1-8E90-4DBB-95EA-F7927E254BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +135,8 @@ Global
 		{4C7F227E-2E90-4D0B-960D-0247DA937117} = {B8531AC8-E394-4875-AB1F-3167F4C7149C}
 		{B8531AC8-E394-4875-AB1F-3167F4C7149C} = {B6087F3A-2586-4098-BD69-449619BEA560}
 		{D1EC6118-9D76-42C1-9F4B-E9819AEC6472} = {B8531AC8-E394-4875-AB1F-3167F4C7149C}
+		{4722CCB1-8E90-4DBB-95EA-F7927E254BAB} = {775A9613-79F0-4FE9-B61D-718C352544B8}
+		{775A9613-79F0-4FE9-B61D-718C352544B8} = {B6087F3A-2586-4098-BD69-449619BEA560}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E715717-C14A-4A09-BE07-93EF8245C66C}
