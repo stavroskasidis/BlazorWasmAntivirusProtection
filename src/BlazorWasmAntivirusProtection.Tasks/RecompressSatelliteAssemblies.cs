@@ -20,19 +20,23 @@ namespace BlazorWasmAntivirusProtection.Tasks
         public string BrotliCompressToolPath { get; set; }
 
         public string CompressionLevel { get; set; }
+        public string RenameDllsTo { get; set; } = "bin";
+        public bool DisableRenamingDlls { get; set; }
 
         public override bool Execute()
         {
-//#if DEBUG
-//            System.Diagnostics.Debugger.Launch();
-//#endif
+            //#if DEBUG
+            //            System.Diagnostics.Debugger.Launch();
+            //#endif
+
+            var assembyFilesExtension = DisableRenamingDlls ? "dll" : RenameDllsTo;
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing satellite assemblies");
             var frameworkDirs = Directory.GetDirectories(PublishDir, "_framework", SearchOption.AllDirectories);
             foreach(var frameworkDir in frameworkDirs)
             {
                 foreach (var file in Directory.GetFiles(frameworkDir, "*.*", SearchOption.AllDirectories))
                 {
-                    if (file.EndsWith(".resources.bin"))
+                    if (file.EndsWith($".resources.{assembyFilesExtension}"))
                     {
                         var gzFile = $"{file}.gz";
                         if (File.Exists(gzFile))
