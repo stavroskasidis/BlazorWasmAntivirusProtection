@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <IsPackable>true</IsPackable>
@@ -11,13 +11,13 @@
 		<PackageProjectUrl>https://github.com/stavroskasidis/BlazorWasmAntivirusProtection</PackageProjectUrl>
 		<Description>This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware</Description>
 		<VersionSuffix>$(VersionSuffix)</VersionSuffix>
-		<Version>2.3.0</Version>
+		<Version>2.4.0</Version>
 		<Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     </PropertyGroup>
 
     <ItemGroup>
         <None Update="build\**" Pack="true" PackagePath="%(Identity)" />
-        <Content Include="_._" Pack="true" PackagePath="lib\net7.0\_._" />
+        <Content Include="_._" Pack="true" PackagePath="lib\net6.0\_._" />	
     </ItemGroup>
 
     <Target Name="GetTasksOutputDlls" BeforeTargets="CoreCompile">
@@ -25,9 +25,7 @@
             <Output TaskParameter="TargetOutputs" ItemName="_TasksProjectOutputs" />
         </MSBuild>
         <ItemGroup>
-            <Content Include="@(_TasksProjectOutputs)" Condition="('%(_TasksProjectOutputs.Extension)' == '.dll' Or '%(_TasksProjectOutputs.Extension)' == '.dylib' Or '%(_TasksProjectOutputs.Extension)' == '.so' Or ('$(Configuration)' == 'Debug' And '%(_TasksProjectOutputs.Extension)' == '.pdb'))" 
-					 
-					 Pack="true" PackagePath="tasks\%(_TasksProjectOutputs.TargetPath)" KeepMetadata="Pack;PackagePath" />
+            <Content Include="@(_TasksProjectOutputs)" Condition="('%(_TasksProjectOutputs.Extension)' == '.dll' Or '%(_TasksProjectOutputs.Extension)' == '.dylib' Or '%(_TasksProjectOutputs.Extension)' == '.so' Or ('$(Configuration)' == 'Debug' And '%(_TasksProjectOutputs.Extension)' == '.pdb'))" Pack="true" PackagePath="tasks\%(_TasksProjectOutputs.TargetPath)" KeepMetadata="Pack;PackagePath" />
         </ItemGroup>
     </Target>
 
@@ -36,12 +34,7 @@
 			<Output TaskParameter="TargetOutputs" ItemName="_ToolsProjectOutputs" />
 		</MSBuild>
 		<ItemGroup>
-			<Content Include="@(_ToolsProjectOutputs)" Condition="('$(Configuration)' == 'Release' And '%(_ToolsProjectOutputs.Extension)' == '.dll')
-					                                            Or ('$(Configuration)' == 'Debug' And ('%(_ToolsProjectOutputs.Extension)' == '.dll' Or '%(_ToolsProjectOutputs.Extension)' == '.pdb'))
-                                                      Or ('%(_ToolsProjectOutputs.Extension)' == '.json')"
-					 Pack="true" 
-					 PackagePath="tools\%(_ToolsProjectOutputs.TargetPath)" 
-					 KeepMetadata="Pack;PackagePath" />
+			<Content Include="@(_ToolsProjectOutputs)" Condition="('$(Configuration)' == 'Release' And '%(_ToolsProjectOutputs.Extension)' == '.dll') Or ('$(Configuration)' == 'Debug' And ('%(_ToolsProjectOutputs.Extension)' == '.dll' Or '%(_ToolsProjectOutputs.Extension)' == '.pdb')) Or ('%(_ToolsProjectOutputs.Extension)' == '.json')" Pack="true" PackagePath="tools\%(_ToolsProjectOutputs.TargetPath)" KeepMetadata="Pack;PackagePath" />
 		</ItemGroup>
 	</Target>
 
