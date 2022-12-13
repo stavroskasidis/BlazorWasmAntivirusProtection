@@ -40,10 +40,10 @@
 					BlazorEnableCompression="$(BlazorEnableCompression)" CompressionLevel="$(_BlazorBrotliCompressionLevel)"
 					BrotliCompressToolPath="$(_BlazorWAPBrotliCompressDll)">
 		</RenameDlls>
-		<!--<RecompressSatelliteAssemblies PublishDir="$(PublishDir)" 
+		<RecompressSatelliteAssemblies PublishDir="$(PublishDir)" 
 									   BrotliCompressToolPath="$(_BlazorWAPBrotliCompressDll)" 
 									   CompressionLevel="$(_BlazorBrotliCompressionLevel)">
-		</RecompressSatelliteAssemblies>-->
+		</RecompressSatelliteAssemblies>
 	</Target>
 
 </Project>

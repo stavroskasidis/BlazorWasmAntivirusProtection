@@ -23,9 +23,9 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public override bool Execute()
         {
-#if DEBUG
-            System.Diagnostics.Debugger.Launch();
-#endif
+//#if DEBUG
+//            System.Diagnostics.Debugger.Launch();
+//#endif
             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing satellite assemblies");
             var frameworkDirs = Directory.GetDirectories(PublishDir, "_framework", SearchOption.AllDirectories);
             foreach(var frameworkDir in frameworkDirs)
@@ -35,16 +35,17 @@ namespace BlazorWasmAntivirusProtection.Tasks
                     if (file.EndsWith(".resources.bin"))
                     {
                         var gzFile = $"{file}.gz";
-                        var brFile = $"{file}.br";
                         if (File.Exists(gzFile))
                         {
                             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{gzFile}\"");
                             if (!Tools.GZipCompress(file, gzFile, Log)) return false;
                         }
+
+                        var brFile = $"{file}.br";
                         if (File.Exists(brFile))
                         {
                             Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Recompressing \"{brFile}\"");
-                            if (!Tools.BrotliCompress(file, gzFile, BrotliCompressToolPath, CompressionLevel, Log)) return false;
+                            if (!Tools.BrotliCompress(file, brFile, BrotliCompressToolPath, CompressionLevel, Log)) return false;
                         }
                     }
                 }
