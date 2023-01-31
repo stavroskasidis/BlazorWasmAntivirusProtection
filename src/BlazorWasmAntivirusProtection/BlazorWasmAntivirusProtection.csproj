@@ -11,7 +11,7 @@
 		<PackageProjectUrl>https://github.com/stavroskasidis/BlazorWasmAntivirusProtection</PackageProjectUrl>
 		<Description>This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware</Description>
 		<VersionSuffix>$(VersionSuffix)</VersionSuffix>
-		<Version>2.4.0</Version>
+		<Version>2.5.0</Version>
 		<Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     </PropertyGroup>
 

@@ -19,6 +19,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
         [Required]
         public string BrotliCompressToolPath { get; set; }
 
+        public string ScriptQueryString { get; set; }
         public string RenameDllsTo { get; set; } = "bin";
         public bool DisableRenamingDlls { get; set; }
         public bool BlazorEnableCompression { get; set; } = true;
@@ -56,6 +57,11 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
                 Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Updating \"{bootJsonPath}\"");
                 var bootJson = File.ReadAllText(bootJsonPath);
+                if (!string.IsNullOrWhiteSpace(ScriptQueryString))
+                {
+                    Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Cache busting \"BlazorWasmAntivirusProtection.lib.module.js\" with query string: {ScriptQueryString}");
+                    bootJson = bootJson.Replace("BlazorWasmAntivirusProtection.lib.module.js", $"BlazorWasmAntivirusProtection.lib.module.js?cache={ScriptQueryString}");
+                }
                 bootJson = bootJson.Replace(".dll", $".{RenameDllsTo}");
                 File.WriteAllText(bootJsonPath, bootJson);
 

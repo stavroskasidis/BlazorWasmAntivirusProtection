@@ -94,6 +94,12 @@ You can disable boot resources caching by using the following property in your C
 <BlazorCacheBootResources>false</BlazorCacheBootResources>
 ```
 
+### **Control browser cache for initializer script**
+The following property can be set to prevent the browser from caching the initializer script. 
+```xml
+<ScriptQueryString>1234</ScriptQueryString>
+```
+
 ## Samples / Demo
 You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/). 
 
@@ -103,6 +109,11 @@ You can see its [virustotal.com](https://www.virustotal.com/) scan result [here]
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
+
+<details open="open"><summary>2.5.0</summary>
+    
+>- Allow appending a query string to the end of the initializer script to prevent browser from caching it.
+</details>
 
 <details open="open"><summary>2.4.0</summary>
     
