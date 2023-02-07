@@ -103,8 +103,13 @@ You can see its [virustotal.com](https://www.virustotal.com/) scan result [here]
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
 ## Release Notes
+<details open="open"><summary>2.4.5</summary>
+    
+>- Fixes [#48](https://github.com/stavroskasidis/BlazorWasmAntivirusProtection/issues/48) (Contribution by [sykesbPragmatics](https://github.com/sykesbPragmatics))
+</details>
 
-<details open="open"><summary>2.4.0</summary>
+
+<details><summary>2.4.0</summary>
     
 >- Fix for gzip satellite assemblies being compressed from original verion instead of obfuscated one.
 >- Changed target back to .net 6.0.

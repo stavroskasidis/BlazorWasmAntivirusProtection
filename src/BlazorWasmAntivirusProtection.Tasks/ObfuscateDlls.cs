@@ -8,6 +8,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
     using System.Net.Http;
     using System.Text;
     using System.Text.Json;
+    using System.Threading;
 
     public class ObfuscateDlls : Task
     {
@@ -28,11 +29,11 @@ namespace BlazorWasmAntivirusProtection.Tasks
 
         public override bool Execute()
         {
-//#if DEBUG
-//            System.Diagnostics.Debugger.Launch();
-//#endif
+            //#if DEBUG
+            //            System.Diagnostics.Debugger.Launch();
+            //#endif
             if (PublishBlazorBootStaticWebAsset.Length == 0) return true;
-            if(!Enum.TryParse<ObfuscationMode>(ObfuscationMode, out var obfuscationMode))
+            if (!Enum.TryParse<ObfuscationMode>(ObfuscationMode, out var obfuscationMode))
             {
                 return false;
             }
@@ -55,7 +56,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
                 Log.LogMessage(MessageImportance.High, $"BlazorWasmAntivirusProtection: Changing .dll headers from MZ to BZ finished");
 
             }
-            else if(obfuscationMode == Tasks.ObfuscationMode.Xor)
+            else if (obfuscationMode == Tasks.ObfuscationMode.Xor)
             {
                 var key = Encoding.ASCII.GetBytes(XorKey);
                 Log.LogMessage(MessageImportance.High, "BlazorWasmAntivirusProtection: Xor'ing .dlls");
@@ -74,7 +75,7 @@ namespace BlazorWasmAntivirusProtection.Tasks
             {
                 obfuscationMode = obfuscationMode,
                 xorKey = XorKey,
-                cacheBootResourcesObfuscated =  OriginalBlazorCacheBootResources
+                cacheBootResourcesObfuscated = OriginalBlazorCacheBootResources
             });
             File.WriteAllText(SettingsPath, settings);
 
@@ -96,13 +97,37 @@ namespace BlazorWasmAntivirusProtection.Tasks
             bw.Write(bz);
         }
 
-        void XorDllWithKey(string fn,byte[] key)
+        void XorDllWithKey(string fn, byte[] key)
         {
             var data = File.ReadAllBytes(fn);
             for (int i = 0; i < data.Length; i++)
                 data[i] = (byte)(data[i] ^ key[i % key.Length]);
 
-            File.WriteAllBytes(fn, data);
+            //Ensure file is not locked
+            //Some VM based systems are having issues replacing the file
+            int attempts = 0;
+            bool complete = false;
+            do
+            {
+                try
+                {
+                    attempts++;
+                    File.WriteAllBytes(fn, data);
+                    complete = true;
+                }
+                catch (Exception)
+                {
+                    if (attempts > 11)
+                    {
+                        //Tried 10 times, abort
+                        throw;
+                    }
+                    //Sleep for .5 second, hopefully lock will clear
+                    Log.LogMessage(MessageImportance.High, "BlazorWasmAntivirusProtection: File locked, will re-attempt");
+                    Thread.Sleep(500);
+                }
+            }
+            while (!complete);
         }
     }
 }
