@@ -2,7 +2,10 @@
 
 [![Nuget (with prereleases)](https://img.shields.io/nuget/v/BlazorWasmAntivirusProtection.svg?logo=nuget)](https://www.nuget.org/packages/BlazorWasmAntivirusProtection)  [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=7CRGWPYB5AKJQ&currency_code=EUR&source=url)
 
-This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware,  [until (or if) Microsoft gives us an official solution](https://github.com/dotnet/aspnetcore/issues/36978).
+> ⚠️⚠️ **NOT RECOMENDED FOR .NET 8.0+** ⚠️⚠️:
+> Please use the new Webcil format that is enabled by default in .NET 8.0. More info [here](https://github.com/dotnet/runtime/issues/80807).
+
+This package attempts to guard against false positives from antiviruses that flag Blazor Wasm as malware (up to .NET version 7.0).
 
 
 ## Confirmed success against:
