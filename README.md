@@ -97,11 +97,6 @@ You can disable boot resources caching by using the following property in your C
 <BlazorCacheBootResources>false</BlazorCacheBootResources>
 ```
 
-## Samples / Demo
-You can find a sample app using this package [here](https://blazor-antivirus-block.azurewebsites.net/). 
-
-You can see its [virustotal.com](https://www.virustotal.com/) scan result [here](https://www.virustotal.com/gui/url/172a7a7059b2f0e0980187fac4921d3df0d5a66a07b5a60e40e23668067b0368).
-
 ## Special Thanks
 This work was inspired by the post in https://github.com/dotnet/aspnetcore/issues/31048#issuecomment-915152791  by github user [tedd](https://github.com/tedd)
 
